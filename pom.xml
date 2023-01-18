@@ -56,6 +56,14 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <artifactId>easy-modbus-java</artifactId>
+            <groupId>de.re.easymodbus</groupId>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/EasyModbusJava.jar</systemPath>
+            <version>2.7</version>
+        </dependency>
     </dependencies>
 
     <build>

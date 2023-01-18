@@ -107,6 +107,16 @@ export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNew
                 parseInt(val):
                 undefined
         )
+        // let result:number|undefined
+        //
+        // if(val != '' || val == undefined){
+        //     result = parseInt(val)
+        //
+        // } else {
+        //     result = undefined
+        // }
+        // console.log('getInt:', result)
+        // return result
     }
 
     return(
@@ -205,7 +215,7 @@ export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNew
                                     border border-solid transition ease-in-out
                                     focus:border-[#046a38] 
                                     ${addrPErr ? 'border-red-700':'border-gray-300'}`}
-                                           value={addrP || ''}
+                                           value={addrP}
                                            onChange={(val)=>{
                                                setAddrP(getInt(val.target.value))
                                            }}
@@ -227,7 +237,7 @@ export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNew
                                     border border-solid transition ease-in-out
                                     focus:border-[#046a38]
                                     ${addrQErr ? 'border-red-700':'border-gray-300'}`}
-                                           value={addrQ || ''}
+                                           value={addrQ}
                                            onChange={(val)=>{
                                                setAddrQ(getInt(val.target.value))
                                            }}
@@ -249,7 +259,7 @@ export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNew
                                     border border-solid transition ease-in-out
                                     focus:border-[#046a38]
                                     ${addrSErr ? 'border-red-700':'border-gray-300'}`}
-                                           value={addrS || ''}
+                                           value={addrS}
                                            onChange={(val)=>{
                                                setAddrS(getInt(val.target.value))
                                            }}
@@ -273,7 +283,7 @@ export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNew
                                     border border-solid transition ease-in-out
                                     focus:border-[#046a38]
                                     ${addrEaErr ? 'border-red-700':'border-gray-300'}`}
-                                           value={addrEa || ''}
+                                           value={addrEa}
                                            onChange={(val)=>{
                                                setAddrEa(getInt(val.target.value))
                                            }}
@@ -295,7 +305,7 @@ export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNew
                                     border border-solid transition ease-in-out
                                     focus:border-[#046a38]
                                     ${addrErErr ? 'border-red-700':'border-gray-300'}`}
-                                           value={addrEr || ''}
+                                           value={addrEr}
                                            onChange={(val)=>{
                                                setAddrEr(getInt(val.target.value))
                                            }}
@@ -317,7 +327,7 @@ export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNew
                                     border border-solid transition ease-in-out
                                     focus:border-[#046a38]
                                     ${addrEgErr ? 'border-red-700':'border-gray-300'}`}
-                                           value={addrEg || ''}
+                                           value={addrEg}
                                            onChange={(val)=>{
                                                setAddrEg(getInt(val.target.value))
                                            }}
@@ -339,7 +349,7 @@ export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNew
                                     border border-solid transition ease-in-out
                                     focus:border-[#046a38]
                                     ${addrEsErr ? 'border-red-700':'border-gray-300'}`}
-                                           value={addrEs || ''}
+                                           value={addrEs}
                                            onChange={(val)=>{
                                                setAddrEs(getInt(val.target.value))
                                            }}
@@ -351,6 +361,7 @@ export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNew
                         </div>
                     </div>
                 </div>
+                <div className='text-base italic'>Holding registers, Float32</div>
                 <div className='flex justify-evenly py-3 box-border border-t'>
                     <div className='flex items-center justify-center w-1/4 h-10 text-2xl rounded box-border
                     transition ease-in-out hover:border hover:text-[#e1251b] active:bg-neutral-200'

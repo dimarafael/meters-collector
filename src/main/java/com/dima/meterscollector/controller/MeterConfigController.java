@@ -2,6 +2,7 @@ package com.dima.meterscollector.controller;
 
 import com.dima.meterscollector.domain.MeterConfiguration;
 import com.dima.meterscollector.exceptions.NotFoundException;
+import com.dima.meterscollector.model.PollMeters;
 import com.dima.meterscollector.repository.MeterConfigRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,9 @@ public class MeterConfigController {
 
     @Autowired
     private MeterConfigRepo meterConfigRepo;
+
+    @Autowired
+    private PollMeters pollMeters;
 
     @GetMapping
     public Iterable<MeterConfiguration> getAllMeters(){
@@ -34,6 +38,7 @@ public class MeterConfigController {
     public MeterConfiguration addMeter(@RequestBody MeterConfiguration meterConf){
         meterConf.setId(null); // protect from editing existing
         meterConfigRepo.save(meterConf);
+        pollMeters.setMeterConfigActual(false);
         return meterConf;
     }
 
@@ -61,11 +66,13 @@ public class MeterConfigController {
         updateMeterConf.setAddrEs(meterConf.getAddrEs());
         updateMeterConf.setAddrEsEnable(meterConf.isAddrEsEnable());
         meterConfigRepo.save(updateMeterConf);
+        pollMeters.setMeterConfigActual(false);
         return meterConf;
     }
 
     @DeleteMapping("/{id}")
     public void deleteMeter(@PathVariable long id){
         meterConfigRepo.deleteById(id);
+        pollMeters.setMeterConfigActual(false);
     }
 }
