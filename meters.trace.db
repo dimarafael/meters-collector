@@ -1,0 +1,6 @@
+2023-01-17 09:21:15 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "METER_CONFIGURATION" not found (this database is empty); SQL statement:
+insert into meter_configuration (id, addr_ea, addr_ea_enable, addr_eg, addr_eg_enable, addr_er, addr_er_enable, addr_es, addr_es_enable, addrp, addrpenable, addrq, addrqenable, addrs, addrsenable, ip_address, polling_enable, title_en, title_hu, unit_id) values (default, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) [42104-214]
+2023-01-17 09:45:32 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "METER_CONFIGURATION" not found (this database is empty); SQL statement:
+insert into meter_configuration (id, addr_ea, addr_ea_enable, addr_eg, addr_eg_enable, addr_er, addr_er_enable, addr_es, addr_es_enable, addrp, addrpenable, addrq, addrqenable, addrs, addrsenable, ip_address, polling_enable, title_en, title_hu, unit_id) values (default, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) [42104-214]
