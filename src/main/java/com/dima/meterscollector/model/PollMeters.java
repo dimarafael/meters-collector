@@ -35,9 +35,6 @@ public class PollMeters {
     private final ModbusClient modbusClient = new ModbusClient();
     @Autowired
     private MeterConfigRepo meterConfigRepo;
-//    @Autowired
-//    private MeterWebSocketController meterWebSocketController;
-
     @Autowired
     SimpMessagingTemplate template;
 

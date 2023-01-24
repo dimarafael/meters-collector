@@ -20,7 +20,7 @@ public class MeterWebSocketController {
     @Autowired
     PollMeters pollMeters;
 
-    @GetMapping("/api/getdata")
+    @GetMapping("/api/getdatatosocket")
     public ResponseEntity<Void> getData(){
         if(pollMeters.getMeterDataList() != null){
             template.convertAndSend("/topic/meters", pollMeters.getMeterDataList());
