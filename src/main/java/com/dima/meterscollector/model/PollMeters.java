@@ -1,5 +1,6 @@
 package com.dima.meterscollector.model;
 
+import com.dima.meterscollector.controller.MeterWebSocketController;
 import com.dima.meterscollector.domain.MeterConfiguration;
 import com.dima.meterscollector.repository.MeterConfigRepo;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -7,6 +8,7 @@ import de.re.easymodbus.modbusclient.ModbusClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -33,6 +35,11 @@ public class PollMeters {
     private final ModbusClient modbusClient = new ModbusClient();
     @Autowired
     private MeterConfigRepo meterConfigRepo;
+//    @Autowired
+//    private MeterWebSocketController meterWebSocketController;
+
+    @Autowired
+    SimpMessagingTemplate template;
 
     @Scheduled(fixedDelay = 5000)
     public void pollMeters(){
@@ -153,6 +160,7 @@ public class PollMeters {
         }
 
         meterDataList = new ArrayList<>(meterDataListCollecting);
+        template.convertAndSend("/topic/meters", getMeterDataList());
 
         try {
             logger.debug(new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(meterDataList));
