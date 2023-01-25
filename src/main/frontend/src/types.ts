@@ -26,3 +26,16 @@ export interface meterConfiguration {
     "addrEs": number,
     "addrEsEnable": boolean
 }
+
+export interface meterData{
+    "titleEn": string,
+    "titleHu": string,
+    "p": number,
+    "q": number,
+    "s": number,
+    "ea": number,
+    "er": number,
+    "eg": number,
+    "es": number,
+    "id": number
+}

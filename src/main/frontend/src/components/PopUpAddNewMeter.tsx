@@ -17,7 +17,7 @@ export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNew
     const [ipAddressErr, setIpAddressErr] = useState(false)
     const [unitId, setUnitId] = useState(meter?.unitId)
     const [unitIdErr, setUnitIdErr] = useState(false)
-    const [pollingEnable, setPollingEnable] = useState<boolean>(meter?.pollingEnable || true)
+    const [pollingEnable, setPollingEnable] = useState<boolean>(meter?.pollingEnable || false)
     const [addrPEnable, setAddrPEnable] = useState(meter?.addrPEnable || false)
     const [addrP, setAddrP] = useState(meter?.addrP)
     const [addrPErr, setAddrPErr] = useState(false)
@@ -77,7 +77,7 @@ export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNew
         if (isValid){
             newMeter = {
                     addrEa: addrEa || 0,
-                    addrEaEnable: addrEsEnable,
+                    addrEaEnable: addrEaEnable,
                     addrEg: addrEg || 0,
                     addrEgEnable: addrEgEnable,
                     addrEr: addrEr || 0,
@@ -107,16 +107,6 @@ export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNew
                 parseInt(val):
                 undefined
         )
-        // let result:number|undefined
-        //
-        // if(val != '' || val == undefined){
-        //     result = parseInt(val)
-        //
-        // } else {
-        //     result = undefined
-        // }
-        // console.log('getInt:', result)
-        // return result
     }
 
     return(
@@ -361,7 +351,7 @@ export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNew
                         </div>
                     </div>
                 </div>
-                <div className='text-base italic'>Holding registers, Float32</div>
+                <div className='text-base italic'>Holding registers, Float32, addr: 0...</div>
                 <div className='flex justify-evenly py-3 box-border border-t'>
                     <div className='flex items-center justify-center w-1/4 h-10 text-2xl rounded box-border
                     transition ease-in-out hover:border hover:text-[#e1251b] active:bg-neutral-200'
