@@ -1,15 +1,16 @@
 import {StompSessionProvider, useSubscription} from "react-stomp-hooks";
-import {useEffect, useState} from "react";
 import {meterData} from "../types";
 
 export function MainPage(){
-    useEffect(()=>{
+
+    function getData(){
         fetch('/api/getdatatosocket').then()
-    },[])
+    }
+
     return(
         <div>
-            <StompSessionProvider url={"http://localhost:8080/websocket"}>
-            {/*<StompSessionProvider url={"/websocket"}>*/}
+            <StompSessionProvider url={"http://localhost:8080/websocket" } onConnect={getData}>
+            {/*<StompSessionProvider url={"/websocket"} onConnect={getData}>*/}
                 <SubscribingComponent/>
             </StompSessionProvider>
         </div>
@@ -20,6 +21,7 @@ function SubscribingComponent() {
     const [metersData, setMetersData] = useState<meterData[]|null>(null);
 
     useSubscription("/topic/meters", (message) => setMetersData(JSON.parse(message.body)));
+
 
     const getRealStr = function (data: number): string {
         if (data !== undefined) {
@@ -33,7 +35,7 @@ function SubscribingComponent() {
                 metersData.map((item:meterData)=>(
                     <div key={item.id} className='accent-neutral-700 w-[49%] flex flex-col
                                                border box-border rounded mb-3 mx-auto hover:shadow'>
-                        <div className='h-1 rounded-t bg-[#046a38]'></div>
+                        <div className={`h-1 rounded-t ${item.online ? 'bg-[#046a38]' : 'bg-[#e1251b]'}`}></div>
                         <div className='flex text-left bg-neutral-200'>
                             <div className='w-1/4 text-right'>Title English:</div>
                             <div className='pl-1 font-semibold'>{item.titleEn}</div>
@@ -57,6 +59,9 @@ function SubscribingComponent() {
                                 <div className='flex mx-1'>
                                     <div className='w-1/2 text-left pl-4'>Apparent</div>
                                     <div className='w-1/2 text-left'>{getRealStr(item.s/1000)} kVA</div>
+                                </div>
+                                <div className='text-sm text-left pl-1 pt-1.5 text-neutral-300'>
+                                    Polling time: {item.pollTime/1000000}s
                                 </div>
                             </div>
                             <div className='flex w-1/2 flex-col'>

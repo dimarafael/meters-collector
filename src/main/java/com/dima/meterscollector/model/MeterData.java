@@ -1,8 +1,6 @@
 package com.dima.meterscollector.model;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Data
 public class MeterData {
@@ -16,4 +14,6 @@ public class MeterData {
     private float eg;
     private float es;
     private long id;
+    private float pollTime; //in microseconds
+    private boolean online;
 }

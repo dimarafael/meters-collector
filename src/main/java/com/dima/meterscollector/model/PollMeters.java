@@ -1,6 +1,5 @@
 package com.dima.meterscollector.model;
 
-import com.dima.meterscollector.controller.MeterWebSocketController;
 import com.dima.meterscollector.domain.MeterConfiguration;
 import com.dima.meterscollector.repository.MeterConfigRepo;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,6 +11,8 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,8 +30,9 @@ public class PollMeters {
         return meterDataList;
     }
 
-    private List<MeterData> meterDataList;
-    private final List<MeterData> meterDataListCollecting = new ArrayList<>();
+    private List<MeterData> meterDataList; // List for data to send for client, always have all data
+
+    private final List<MeterData> meterDataListCollecting = new ArrayList<>(); // List for put data when polling all counters, can be empty at start of polling
     private List<MeterConfiguration> meterConfigurations = new ArrayList<>();
     private final ModbusClient modbusClient = new ModbusClient();
     @Autowired
@@ -38,7 +40,8 @@ public class PollMeters {
     @Autowired
     SimpMessagingTemplate template;
 
-    @Scheduled(fixedDelay = 5000)
+    @Scheduled(fixedDelay = 1000)
+//    @Scheduled()
     public void pollMeters(){
         meterDataListCollecting.clear();
         if(!isMeterConfigActual){
@@ -48,7 +51,8 @@ public class PollMeters {
         logger.debug("Modbus: Start polling");
         for(MeterConfiguration meter : meterConfigurations){
             if(meter.isPollingEnable()){
-                MeterData meterData = new MeterData();
+                LocalTime startTime = LocalTime.now();//For polling time calculation
+                MeterData meterData = new MeterData(); //Object for collecting data from one meter
                 meterData.setTitleEn(meter.getTitleEn());
                 meterData.setTitleHu(meter.getTitleHu());
                 meterData.setId(meter.getId());
@@ -141,13 +145,13 @@ public class PollMeters {
                                     + ". Exception: " + e);
                         }
                     }
-
+                    meterData.setOnline(true);
                 } catch (Exception e){
                     logger.error("Modbus: " + meter.getIpAddress() + " not reachable. Exception: " + e);
+                    meterData.setOnline(false);
                 }
-
-                meterDataListCollecting.add(meterData);
-
+                meterData.setPollTime(startTime.until(LocalTime.now(), ChronoUnit.MICROS));
+                meterDataListCollecting.add(meterData); //Add data from this meter lo list
                 try {
                     modbusClient.Disconnect();
                 } catch (Exception e){
@@ -156,9 +160,10 @@ public class PollMeters {
             }
         }
 
-        meterDataList = new ArrayList<>(meterDataListCollecting);
-        template.convertAndSend("/topic/meters", getMeterDataList());
+        meterDataList = new ArrayList<>(meterDataListCollecting); //Put collected data to list for client
+        template.convertAndSend("/topic/meters", getMeterDataList()); //Send data to websocket
 
+        // For debug, print to log all meters data
         try {
             logger.debug(new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(meterDataList));
         } catch (Exception e){

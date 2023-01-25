@@ -37,5 +37,7 @@ export interface meterData{
     "er": number,
     "eg": number,
     "es": number,
-    "id": number
+    "id": number,
+    pollTime: number,
+    online: boolean
 }
