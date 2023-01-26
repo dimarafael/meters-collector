@@ -69,6 +69,21 @@
             <systemPath>${basedir}/lib/EasyModbusJava.jar</systemPath>
             <version>2.7</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-actuator -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+            <version>3.0.2</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/io.micrometer/micrometer-registry-prometheus -->
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+            <version>1.10.3</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -77,6 +92,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+                    <includeSystemScope>true</includeSystemScope>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
@@ -85,6 +101,7 @@
                     </excludes>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
@@ -92,7 +109,6 @@
 
                 <configuration>
                     <nodeVersion>${node.version}</nodeVersion>
-                    <!--                    <yarnVersion>${yarn.version}</yarnVersion>-->
                     <workingDirectory>${frontend-src-dir}</workingDirectory>
                     <installDirectory>${project.build.directory}</installDirectory>
                 </configuration>
