@@ -1,5 +1,6 @@
 package com.dima.meterscollector.model;
 
+import com.dima.meterscollector.controller.PrometheusController;
 import com.dima.meterscollector.domain.MeterConfiguration;
 import com.dima.meterscollector.repository.MeterConfigRepo;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,6 +19,22 @@ import java.util.List;
 
 @Component
 public class PollMeters {
+
+    public float getValues(Long id, int req){ //req: 0-p, 1-q, 2-s
+        float res = 0;
+        for(MeterData data : meterDataList){
+            if(data.getId() == id){
+                res = switch (req) {
+                    case 0 -> data.getP();
+                    case 1 -> data.getQ();
+                    case 2 -> data.getS();
+                    default -> 0;
+                };
+            }
+        }
+        return res;
+    }
+
     Logger logger = LoggerFactory.getLogger(PollMeters.class);
 
     public void setMeterConfigActual(boolean meterConfigActual) {
@@ -33,10 +50,16 @@ public class PollMeters {
     private List<MeterData> meterDataList; // List for data to send for client, always have all data
 
     private final List<MeterData> meterDataListCollecting = new ArrayList<>(); // List for put data when polling all counters, can be empty at start of polling
+
+
     private List<MeterConfiguration> meterConfigurations = new ArrayList<>();
     private final ModbusClient modbusClient = new ModbusClient();
     @Autowired
     private MeterConfigRepo meterConfigRepo;
+
+    @Autowired
+    private PrometheusController prometheusController;
+
     @Autowired
     SimpMessagingTemplate template;
 
@@ -46,6 +69,7 @@ public class PollMeters {
         meterDataListCollecting.clear();
         if(!isMeterConfigActual){
             meterConfigurations = meterConfigRepo.findAll();
+            prometheusController.registerMeters(meterConfigurations, this::getValues);//register meters for prometheus metrics
             setMeterConfigActual(true);
         }
         logger.debug("Modbus: Start polling");
@@ -171,4 +195,5 @@ public class PollMeters {
         }
 
     }
+
 }
