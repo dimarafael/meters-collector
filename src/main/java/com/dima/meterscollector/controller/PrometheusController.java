@@ -3,6 +3,7 @@ package com.dima.meterscollector.controller;
 
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.config.MeterFilter;
 import org.springframework.stereotype.Component;
 
 
@@ -15,8 +16,11 @@ public class PrometheusController {
     MeterRegistry meterRegistry;
     public PrometheusController(MeterRegistry meterRegistry){
         this.meterRegistry = meterRegistry;
-        Gauge g = Gauge.builder("my_test_meter", this::t).register(meterRegistry);
-//        meterRegistry.config().meterFilter(MeterFilter.denyUnless(g.getId()));
+        meterRegistry.config()
+                .meterFilter(MeterFilter.acceptNameStartsWith("meter"))
+                .meterFilter(MeterFilter.deny());
+
+        Gauge.builder("meter23_test_meter", this::t).description("Description").register(meterRegistry);
     }
 
 }
