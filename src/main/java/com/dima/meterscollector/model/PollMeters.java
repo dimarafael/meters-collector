@@ -63,7 +63,7 @@ public class PollMeters {
     @Autowired
     SimpMessagingTemplate template;
 
-    @Scheduled(fixedDelay = 1000)
+    @Scheduled(fixedDelay = 5000)
 //    @Scheduled()
     public void pollMeters(){
         meterDataListCollecting.clear();
