@@ -10,7 +10,8 @@ public class TestRestController {
 //    private PrometheusController prometheusController;
 
     @GetMapping(value = "test")
-    public void testPrometheus(){
+    public String testPrometheus(){
 //        prometheusController.registerMeters();
+        return "Hello from test";
     }
 }
