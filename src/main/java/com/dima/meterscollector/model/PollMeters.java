@@ -171,7 +171,7 @@ public class PollMeters {
                     }
                     meterData.setOnline(true);
                 } catch (Exception e){
-                    logger.error("Modbus: " + meter.getIpAddress() + " not reachable. Exception: " + e);
+                    logger.error("Modbus: " + meter.getIpAddress() + " ID=" + meter.getId() + " not reachable. Exception: " + e);
                     meterData.setOnline(false);
                 }
                 meterData.setPollTime(startTime.until(LocalTime.now(), ChronoUnit.MICROS));

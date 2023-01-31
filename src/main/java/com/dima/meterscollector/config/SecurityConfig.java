@@ -23,7 +23,9 @@ public class SecurityConfig {
                 .csrf().disable()
 //                .formLogin()
 //                .and()
-//                .logout().logoutUrl("/logout")
+//                .logout().logoutUrl("/logout").logoutSuccessUrl("/")
+//                .deleteCookies("JSESSIONID")
+//                .invalidateHttpSession(true)
 //                .and()
                 .httpBasic();
 
