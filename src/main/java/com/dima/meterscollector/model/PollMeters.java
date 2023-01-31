@@ -4,7 +4,14 @@ import com.dima.meterscollector.controller.PrometheusController;
 import com.dima.meterscollector.domain.MeterConfiguration;
 import com.dima.meterscollector.repository.MeterConfigRepo;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.re.easymodbus.modbusclient.ModbusClient;
+//import de.re.easymodbus.modbusclient.ModbusClient;
+import com.ghgande.j2mod.modbus.ModbusException;
+import com.ghgande.j2mod.modbus.io.ModbusTCPTransaction;
+import com.ghgande.j2mod.modbus.msg.ReadMultipleRegistersRequest;
+import com.ghgande.j2mod.modbus.msg.ReadMultipleRegistersResponse;
+import com.ghgande.j2mod.modbus.net.TCPMasterConnection;
+import com.ghgande.j2mod.modbus.procimg.Register;
+import com.ghgande.j2mod.modbus.util.ModbusUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +19,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.net.InetAddress;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -53,7 +61,31 @@ public class PollMeters {
 
 
     private List<MeterConfiguration> meterConfigurations = new ArrayList<>();
-    private final ModbusClient modbusClient = new ModbusClient();
+//    private final ModbusClient modbusClient = new ModbusClient();
+    protected static TCPMasterConnection con = null;
+    protected static ModbusTCPTransaction trans = null;
+    protected static ReadMultipleRegistersRequest req = null; //the request
+    protected static ReadMultipleRegistersResponse res = null; //the response
+    private float getFloatFromRegisters(Register[] registers){
+        if(registers.length<2) throw new NullPointerException();
+        byte[] arr = new byte[4];
+        arr[0] = res.getRegister(1).toBytes()[0];
+        arr[1] = res.getRegister(1).toBytes()[1];
+        arr[2] = res.getRegister(0).toBytes()[0];
+        arr[3] = res.getRegister(0).toBytes()[1];
+        return ModbusUtil.registersToFloat(arr);
+    }
+
+    private float pollFloat(byte unitId, int addr, TCPMasterConnection con) throws ModbusException {
+        req = new ReadMultipleRegistersRequest(addr,2);
+        req.setUnitID(unitId);
+        trans = new ModbusTCPTransaction(con);
+        trans.setRequest(req);
+        trans.execute();
+        res = (ReadMultipleRegistersResponse) trans.getResponse();
+        return getFloatFromRegisters(res.getRegisters());
+    }
+
     @Autowired
     private MeterConfigRepo meterConfigRepo;
 
@@ -82,26 +114,28 @@ public class PollMeters {
                 meterData.setId(meter.getId());
 
                 logger.debug("Modbus: Polling " + meter.getIpAddress() + " unitId=" + meter.getUnitId());
-                modbusClient.setipAddress(meter.getIpAddress());
-                modbusClient.setUnitIdentifier(meter.getUnitId());
+//                modbusClient.setipAddress(meter.getIpAddress());
+//                modbusClient.setUnitIdentifier(meter.getUnitId());
                 try {
-                    modbusClient.Connect();
+                    con = new TCPMasterConnection(InetAddress.getByName(meter.getIpAddress()));
+                    con.setPort(502);
+                    con.connect();
+//                    modbusClient.Connect();
 
                     if(meter.isAddrPEnable()){
                         try {
-                            meterData.setP(ModbusClient.ConvertRegistersToFloat(
-                                    modbusClient.ReadHoldingRegisters(meter.getAddrP(), 2)));
+                            meterData.setP(pollFloat(meter.getUnitId(),meter.getAddrP(),con));
                         } catch (Exception e){
                             logger.error("Modbus not response: " + meter.getIpAddress()
                                     + " unitId=" + meter.getUnitId()
-                            + " register=" + meter.getAddrP());
+                                    + " register=" + meter.getAddrP()
+                                    + ". Exception: " + e);
                         }
                     }
 
                     if(meter.isAddrQEnable()){
                         try {
-                            meterData.setQ(ModbusClient.ConvertRegistersToFloat(
-                                    modbusClient.ReadHoldingRegisters(meter.getAddrQ(), 2)));
+                            meterData.setQ(pollFloat(meter.getUnitId(),meter.getAddrQ(),con));
                         } catch (Exception e){
                             logger.error("Modbus not response: " + meter.getIpAddress()
                                     + " unitId=" + meter.getUnitId()
@@ -112,8 +146,7 @@ public class PollMeters {
 
                     if(meter.isAddrSEnable()){
                         try {
-                            meterData.setS(ModbusClient.ConvertRegistersToFloat(
-                                    modbusClient.ReadHoldingRegisters(meter.getAddrS(), 2)));
+                            meterData.setS(pollFloat(meter.getUnitId(),meter.getAddrS(),con));
                         } catch (Exception e){
                             logger.error("Modbus not response: " + meter.getIpAddress()
                                     + " unitId=" + meter.getUnitId()
@@ -124,8 +157,7 @@ public class PollMeters {
 
                     if(meter.isAddrEaEnable()){
                         try {
-                            meterData.setEa(ModbusClient.ConvertRegistersToFloat(
-                                    modbusClient.ReadHoldingRegisters(meter.getAddrEa(), 2)));
+                            meterData.setEa(pollFloat(meter.getUnitId(),meter.getAddrEa(),con));
                         } catch (Exception e){
                             logger.error("Modbus not response: " + meter.getIpAddress()
                                     + " unitId=" + meter.getUnitId()
@@ -136,8 +168,7 @@ public class PollMeters {
 
                     if(meter.isAddrErEnable()){
                         try {
-                            meterData.setEr(ModbusClient.ConvertRegistersToFloat(
-                                    modbusClient.ReadHoldingRegisters(meter.getAddrEr(), 2)));
+                            meterData.setEr(pollFloat(meter.getUnitId(),meter.getAddrEr(),con));
                         } catch (Exception e){
                             logger.error("Modbus not response: " + meter.getIpAddress()
                                     + " unitId=" + meter.getUnitId()
@@ -148,8 +179,7 @@ public class PollMeters {
 
                     if(meter.isAddrEgEnable()){
                         try {
-                            meterData.setEg(ModbusClient.ConvertRegistersToFloat(
-                                    modbusClient.ReadHoldingRegisters(meter.getAddrEg(), 2)));
+                            meterData.setEg(pollFloat(meter.getUnitId(),meter.getAddrEg(),con));
                         } catch (Exception e){
                             logger.error("Modbus not response: " + meter.getIpAddress()
                                     + " unitId=" + meter.getUnitId()
@@ -160,8 +190,7 @@ public class PollMeters {
 
                     if(meter.isAddrEsEnable()){
                         try {
-                            meterData.setEs(ModbusClient.ConvertRegistersToFloat(
-                                    modbusClient.ReadHoldingRegisters(meter.getAddrEs(), 2)));
+                            meterData.setEs(pollFloat(meter.getUnitId(),meter.getAddrEs(),con));
                         } catch (Exception e){
                             logger.error("Modbus not response: " + meter.getIpAddress()
                                     + " unitId=" + meter.getUnitId()
@@ -177,7 +206,8 @@ public class PollMeters {
                 meterData.setPollTime(startTime.until(LocalTime.now(), ChronoUnit.MICROS));
                 meterDataListCollecting.add(meterData); //Add data from this meter lo list
                 try {
-                    modbusClient.Disconnect();
+//                    modbusClient.Disconnect();
+                    con.close();
                 } catch (Exception e){
                     logger.error("Modbus disconnect from " + meter.getIpAddress() + ". Exception: " + e);
                 }
