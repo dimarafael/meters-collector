@@ -4,7 +4,6 @@ import com.dima.meterscollector.controller.PrometheusController;
 import com.dima.meterscollector.domain.MeterConfiguration;
 import com.dima.meterscollector.repository.MeterConfigRepo;
 import com.fasterxml.jackson.databind.ObjectMapper;
-//import de.re.easymodbus.modbusclient.ModbusClient;
 import com.ghgande.j2mod.modbus.ModbusException;
 import com.ghgande.j2mod.modbus.io.ModbusTCPTransaction;
 import com.ghgande.j2mod.modbus.msg.ReadMultipleRegistersRequest;
@@ -61,7 +60,6 @@ public class PollMeters {
 
 
     private List<MeterConfiguration> meterConfigurations = new ArrayList<>();
-//    private final ModbusClient modbusClient = new ModbusClient();
     protected static TCPMasterConnection con = null;
     protected static ModbusTCPTransaction trans = null;
     protected static ReadMultipleRegistersRequest req = null; //the request
@@ -114,13 +112,11 @@ public class PollMeters {
                 meterData.setId(meter.getId());
 
                 logger.debug("Modbus: Polling " + meter.getIpAddress() + " unitId=" + meter.getUnitId());
-//                modbusClient.setipAddress(meter.getIpAddress());
-//                modbusClient.setUnitIdentifier(meter.getUnitId());
                 try {
                     con = new TCPMasterConnection(InetAddress.getByName(meter.getIpAddress()));
                     con.setPort(502);
                     con.connect();
-//                    modbusClient.Connect();
+                    meterData.setOnline(true);
 
                     if(meter.isAddrPEnable()){
                         try {
@@ -130,6 +126,8 @@ public class PollMeters {
                                     + " unitId=" + meter.getUnitId()
                                     + " register=" + meter.getAddrP()
                                     + ". Exception: " + e);
+                            meterData.setOnline(false);
+                            meterData.setP(0);
                         }
                     }
 
@@ -141,6 +139,8 @@ public class PollMeters {
                                     + " unitId=" + meter.getUnitId()
                                     + " register=" + meter.getAddrQ()
                                     + ". Exception: " + e);
+                            meterData.setOnline(false);
+                            meterData.setQ(0);
                         }
                     }
 
@@ -152,6 +152,8 @@ public class PollMeters {
                                     + " unitId=" + meter.getUnitId()
                                     + " register=" + meter.getAddrS()
                                     + ". Exception: " + e);
+                            meterData.setOnline(false);
+                            meterData.setS(0);
                         }
                     }
 
@@ -163,6 +165,11 @@ public class PollMeters {
                                     + " unitId=" + meter.getUnitId()
                                     + " register=" + meter.getAddrEa()
                                     + ". Exception: " + e);
+                            meterData.setOnline(false);
+                            MeterData previousData = meterDataList.stream()
+                                    .filter(data -> meter.getId().equals(data.getId()))
+                                    .findAny().orElse(null);
+                            if(previousData != null) meterData.setEa(previousData.getEa());
                         }
                     }
 
@@ -174,6 +181,11 @@ public class PollMeters {
                                     + " unitId=" + meter.getUnitId()
                                     + " register=" + meter.getAddrEr()
                                     + ". Exception: " + e);
+                            meterData.setOnline(false);
+                            MeterData previousData = meterDataList.stream()
+                                    .filter(data -> meter.getId().equals(data.getId()))
+                                    .findAny().orElse(null);
+                            if(previousData != null) meterData.setEr(previousData.getEr());
                         }
                     }
 
@@ -185,6 +197,11 @@ public class PollMeters {
                                     + " unitId=" + meter.getUnitId()
                                     + " register=" + meter.getAddrEg()
                                     + ". Exception: " + e);
+                            meterData.setOnline(false);
+                            MeterData previousData = meterDataList.stream()
+                                    .filter(data -> meter.getId().equals(data.getId()))
+                                    .findAny().orElse(null);
+                            if(previousData != null) meterData.setEg(previousData.getEg());
                         }
                     }
 
@@ -196,17 +213,29 @@ public class PollMeters {
                                     + " unitId=" + meter.getUnitId()
                                     + " register=" + meter.getAddrEs()
                                     + ". Exception: " + e);
+                            meterData.setOnline(false);
+                            MeterData previousData = meterDataList.stream()
+                                    .filter(data -> meter.getId().equals(data.getId()))
+                                    .findAny().orElse(null);
+                            if(previousData != null) meterData.setEs(previousData.getEs());
                         }
                     }
-                    meterData.setOnline(true);
+
                 } catch (Exception e){
-                    logger.error("Modbus: " + meter.getIpAddress() + " ID=" + meter.getId() + " not reachable. Exception: " + e);
+                    logger.error("Modbus: " + meter.getIpAddress() + " meter ID=" + meter.getId() + " not reachable. Exception: " + e);
+
+                    MeterData previousData = meterDataList.stream()
+                            .filter(data -> meter.getId().equals(data.getId()))
+                            .findAny().orElse(null);
+                    if(previousData != null) meterData = previousData;
+                    meterData.setP(0);
+                    meterData.setQ(0);
+                    meterData.setS(0);
                     meterData.setOnline(false);
                 }
                 meterData.setPollTime(startTime.until(LocalTime.now(), ChronoUnit.MICROS));
                 meterDataListCollecting.add(meterData); //Add data from this meter lo list
                 try {
-//                    modbusClient.Disconnect();
                     con.close();
                 } catch (Exception e){
                     logger.error("Modbus disconnect from " + meter.getIpAddress() + ". Exception: " + e);
