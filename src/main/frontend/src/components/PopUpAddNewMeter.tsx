@@ -39,6 +39,7 @@ export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNew
     const [addrEsEnable, setAddrEsEnable] = useState(meter?.addrEsEnable || false)
     const [addrEs, setAddrEs] = useState(meter?.addrEs)
     const [addrEsErr, setAddrEsErr] = useState(false)
+    const [dataInKilo, setDataInKilo] = useState(false)
 
     let newMeter:meterConfiguration
     // const [newMeter, setNewMeter] = useState<meterConfiguration>()
@@ -95,7 +96,8 @@ export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNew
                     pollingEnable: pollingEnable,
                     titleEn: titleEn,
                     titleHu: titleHu,
-                    unitId: unitId || 0
+                    unitId: unitId || 0,
+                    dataInKilo: dataInKilo
                 }
         }
         return isValid
@@ -149,8 +151,8 @@ export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNew
 
                 <div className='flex flex-col flex-auto py-1'>
                     <div className='flex py-1'>
-                        <div className='w-2/12 text-right'>
-                            IP address:
+                        <div className='w-1/12 text-right'>
+                            IP:
                         </div>
                         <div className='w-3/12 text-left pl-2'>
                             <input type='text' className={`w-full rounded px-1 outline-none
@@ -164,7 +166,7 @@ export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNew
                         </div>
 
                         <div className='w-2/12 text-right'>
-                            Unit ID:
+                            Modbus ID:
                         </div>
                         <div className='w-1/12 text-left pl-1'>
                             <input type='number' className={`w-full rounded px-1 outline-none
@@ -180,8 +182,18 @@ export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNew
                             />
                         </div>
 
-                        <div className='w-3/12 text-right'>
-                            Polling enable:
+                        <div className='w-2/12 text-right'>
+                            data in kilo:
+                        </div>
+
+                        <div className='w-1/12 text-left pl-2'>
+                            <input type='checkbox' checked={dataInKilo}
+                                   onChange={(val)=>{setDataInKilo(val.target.checked)}}
+                            />
+                        </div>
+
+                        <div className='w-1/12 text-right'>
+                            Polling:
                         </div>
 
                         <div className='w-1/12 text-left pl-2'>

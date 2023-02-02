@@ -34,4 +34,5 @@ public class MeterConfiguration {
     private boolean addrEgEnable;
     private int addrEs; // Total apparent energy
     private boolean addrEsEnable;
+    private boolean dataInKilo;
 }

@@ -85,20 +85,26 @@ export function MetersConfig() {
                     <div className='flex'>
                         <div className='flex flex-col flex-auto'>
                             <div className='flex'>
-                                <div className='w-2/12 text-right'>
-                                    IP address:
+                                <div className='w-1/12 text-right'>
+                                    IP:
                                 </div>
                                 <div className='w-3/12 text-left pl-2'>
                                     {item.ipAddress }
                                 </div>
                                 <div className='w-2/12 text-right'>
-                                    Unit ID:
+                                    Modbus ID:
                                 </div>
                                 <div className='w-1/12 text-left pl-1'>
                                     {item.unitId}
                                 </div>
-                                <div className='w-3/12 text-right'>
-                                    Polling enable:
+                                <div className='w-2/12 text-right'>
+                                    data in kilo:
+                                </div>
+                                <div className='w-1/12 text-left pl-2'>
+                                    <input type='checkbox' checked={item.dataInKilo} readOnly={true}/>
+                                </div>
+                                <div className='w-1/12 text-right'>
+                                    Poll:
                                 </div>
                                 <div className='w-1/12 text-left pl-2'>
                                     <input type='checkbox' checked={item.pollingEnable} readOnly={true}/>

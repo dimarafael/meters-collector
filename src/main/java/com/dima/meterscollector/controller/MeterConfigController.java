@@ -65,6 +65,7 @@ public class MeterConfigController {
         updateMeterConf.setAddrEgEnable(meterConf.isAddrEgEnable());
         updateMeterConf.setAddrEs(meterConf.getAddrEs());
         updateMeterConf.setAddrEsEnable(meterConf.isAddrEsEnable());
+        updateMeterConf.setDataInKilo(meterConf.isDataInKilo());
         meterConfigRepo.save(updateMeterConf);
         pollMeters.setMeterConfigActual(false);
         return meterConf;

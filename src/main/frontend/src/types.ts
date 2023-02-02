@@ -25,6 +25,7 @@ export interface meterConfiguration {
     "addrEgEnable": boolean,
     "addrEs": number,
     "addrEsEnable": boolean
+    "dataInKilo": boolean,
 }
 
 export interface meterData{
