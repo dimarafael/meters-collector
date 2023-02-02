@@ -51,15 +51,15 @@ function SubscribingComponent() {
                                 <div className='font-semibold border-b mx-1'>Power</div>
                                 <div className='flex border-b mx-1'>
                                     <div className='w-1/2 text-left pl-4'>Active</div>
-                                    <div className='w-1/2 text-left'>{getRealStr(item.p/1000)} kW</div>
+                                    <div className='w-1/2 text-left'>{getRealStr(item.p)} kW</div>
                                 </div>
                                 <div className='flex border-b mx-1'>
                                     <div className='w-1/2 text-left pl-4'>Reactive</div>
-                                    <div className='w-1/2 text-left'>{getRealStr(item.q/1000)} kvar</div>
+                                    <div className='w-1/2 text-left'>{getRealStr(item.q)} kvar</div>
                                 </div>
                                 <div className='flex mx-1'>
                                     <div className='w-1/2 text-left pl-4'>Apparent</div>
-                                    <div className='w-1/2 text-left'>{getRealStr(item.s/1000)} kVA</div>
+                                    <div className='w-1/2 text-left'>{getRealStr(item.s)} kVA</div>
                                 </div>
                                 <div className='text-sm text-left pl-1 pt-1.5 text-neutral-300'>
                                     {item.id}:Polling time: {item.pollTime/1000000}s
@@ -69,19 +69,19 @@ function SubscribingComponent() {
                                 <div className='font-semibold border-b mx-1'>Energy</div>
                                 <div className='flex border-b mx-1'>
                                     <div className='w-1/2 text-left pl-4'>Active</div>
-                                    <div className='w-1/2 text-left'>{getRealStr(item.ea/1000)} kWh</div>
+                                    <div className='w-1/2 text-left'>{getRealStr(item.ea)} kWh</div>
                                 </div>
                                 <div className='flex border-b mx-1'>
                                     <div className='w-1/2 text-left pl-4'>Reactive</div>
-                                    <div className='w-1/2 text-left'>{getRealStr(item.er/1000)} kvarh</div>
+                                    <div className='w-1/2 text-left'>{getRealStr(item.er)} kvarh</div>
                                 </div>
                                 <div className='flex border-b mx-1'>
                                     <div className='w-1/2 text-left pl-4'>Generated</div>
-                                    <div className='w-1/2 text-left'>{getRealStr(item.eg/1000)} kvarh</div>
+                                    <div className='w-1/2 text-left'>{getRealStr(item.eg)} kvarh</div>
                                 </div>
                                 <div className='flex mx-1'>
                                     <div className='w-1/2 text-left pl-4'>Apparent</div>
-                                    <div className='w-1/2 text-left'>{getRealStr(item.es/1000)} kVAh</div>
+                                    <div className='w-1/2 text-left'>{getRealStr(item.es)} kVAh</div>
                                 </div>
                             </div>
                         </div>

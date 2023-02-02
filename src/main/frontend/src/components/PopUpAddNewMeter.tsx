@@ -39,7 +39,7 @@ export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNew
     const [addrEsEnable, setAddrEsEnable] = useState(meter?.addrEsEnable || false)
     const [addrEs, setAddrEs] = useState(meter?.addrEs)
     const [addrEsErr, setAddrEsErr] = useState(false)
-    const [dataInKilo, setDataInKilo] = useState(false)
+    const [dataInKilo, setDataInKilo] = useState(meter?.dataInKilo|| false)
 
     let newMeter:meterConfiguration
     // const [newMeter, setNewMeter] = useState<meterConfiguration>()
