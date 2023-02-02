@@ -62,7 +62,7 @@ function SubscribingComponent() {
                                     <div className='w-1/2 text-left'>{getRealStr(item.s/1000)} kVA</div>
                                 </div>
                                 <div className='text-sm text-left pl-1 pt-1.5 text-neutral-300'>
-                                    Polling time: {item.pollTime/1000000}s
+                                    {item.id}:Polling time: {item.pollTime/1000000}s
                                 </div>
                             </div>
                             <div className='flex w-1/2 flex-col'>

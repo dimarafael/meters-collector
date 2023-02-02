@@ -26,7 +26,7 @@ function App() {
                 <div className='flex-auto text-white text-4xl uppercase text-left  box-border '>
                   Meters collector
                 </div>
-                <div className=''>Login</div>
+                {/*<div className=''>Login</div>*/}
               </div>
               <div className='flex h-1/3 text-left text-white text-lg uppercase'>
                 <div className='w-1/4'>
@@ -57,7 +57,7 @@ function App() {
         </div>
         <footer className='bg-[#aaac24]'>
           <div className=' my-1 mx-auto xl:max-w-screen-xl text-white text-lg text-left'>
-            Footer
+            KOMETA 99 ZRT
           </div>
         </footer>
       </div>

@@ -1,0 +1,27 @@
+services:
+  meters-collector:
+    build: .
+    image: meters-collector
+    container_name: meters-collector
+    restart: always
+    ports:
+      - "8080:8080"
+    volumes:
+      - /home/user/meters-collector:/var/log/spring
+  prometheus:
+    image: "prom/prometheus"
+    container_name: prometheus
+    restart: always
+    ports:
+      - "9090:9090"
+    volumes:
+      - /home/user/meters-collector/prometheus-conf:/etc/prometheus
+      - /home/user/meters-collector/prometheus-data:/prometheus
+  grafana:
+    image: "grafana/grafana"
+    container_name: grafana
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - /home/user/meters-collector/grafana-data:/var/lib/grafana
