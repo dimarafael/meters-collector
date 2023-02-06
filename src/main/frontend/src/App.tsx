@@ -10,7 +10,7 @@ function App() {
   const[page, setPage] = useState(PAGE.main)
   return (
     <div className="App text-lg font-sans text-neutral-700">
-      <div className='flex flex-col mx-auto max-w-full min-h-screen overflow-y-scroll'>
+      <div className='flex flex-col mx-auto max-w-full min-h-screen'>   {/*overflow-y-scroll*/}
 
         <header className='bg-[#046a38]'>
           <div className='flex h-20 mx-auto xl:max-w-screen-xl '>

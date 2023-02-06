@@ -59,6 +59,10 @@ public class PollMeters {
     private final List<MeterData> meterDataListCollecting = new ArrayList<>(); // List for put data when polling all counters, can be empty at start of polling
 
 
+    public List<MeterConfiguration> getMeterConfigurations() {
+        return meterConfigurations;
+    }
+
     private List<MeterConfiguration> meterConfigurations = new ArrayList<>();
     protected static TCPMasterConnection con = null;
     protected static ModbusTCPTransaction trans = null;
