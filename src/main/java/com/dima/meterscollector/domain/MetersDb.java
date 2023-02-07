@@ -1,5 +1,6 @@
 package com.dima.meterscollector.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -24,6 +25,7 @@ public class MetersDb {
         dateTime = new Date();
     }
 
+    @JsonIgnore
     @ManyToOne
-    MeterConfiguration meterConfiguration;
+    private MeterConfiguration meterConfiguration;
 }

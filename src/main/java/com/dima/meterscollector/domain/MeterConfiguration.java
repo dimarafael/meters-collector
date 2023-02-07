@@ -1,10 +1,9 @@
 package com.dima.meterscollector.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -35,4 +34,8 @@ public class MeterConfiguration {
     private int addrEs; // Total apparent energy
     private boolean addrEsEnable;
     private boolean dataInKilo;
+
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.PERSIST, mappedBy = "meterConfiguration")
+    private List<MetersDb> metersDbs;
+
 }
