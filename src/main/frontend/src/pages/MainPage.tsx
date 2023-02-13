@@ -10,8 +10,8 @@ export function MainPage(){
 
     return(
         <div>
-            <StompSessionProvider url={"http://localhost:8080/websocket" } onConnect={getData}>
-            {/*<StompSessionProvider url={"/websocket"} onConnect={getData}>*/}
+            {/*<StompSessionProvider url={"http://localhost:8080/websocket" } onConnect={getData}>*/}
+            <StompSessionProvider url={"/websocket"} onConnect={getData}>
                 <SubscribingComponent/>
             </StompSessionProvider>
         </div>

@@ -5,6 +5,9 @@ import {MainPage} from "./pages/MainPage";
 import {MetersConfig} from "./pages/MetersConfig";
 import {LogsPage} from "./pages/LogsPage";
 import logo from './img/KOMETA_logo_negative_500.png'
+import {AiOutlineLineChart, AiOutlineSetting} from 'react-icons/ai'
+import {BsSpeedometer} from  'react-icons/bs'
+import {RxActivityLog} from 'react-icons/rx'
 
 function App() {
   const[page, setPage] = useState(PAGE.main)
@@ -30,23 +33,28 @@ function App() {
               </div>
               <div className='flex h-1/3 text-left text-white text-lg uppercase'>
                 <div className='w-1/4'>
-                  <a className='cursor-pointer'
+                  <a className='cursor-pointer flex'
                           onClick={() => setPage(PAGE.main)}
-                  >Main</a>
+                  ><BsSpeedometer className='text-2xl mr-1'/>Meters</a>
                 </div>
                 <div className='w-1/4'>
-                  <a className='cursor-pointer'
+                  <a className='cursor-pointer flex'
+                     href={`${window.location.protocol}//${window.location.hostname}:3000`}
+                     target="_blank"
+                  ><AiOutlineLineChart className='text-3xl mr-1'/>Charts</a>
+                </div>
+                <div className='w-1/4'>
+                  <a className='cursor-pointer flex'
                           onClick={() => setPage(PAGE.config)}
-                  >Settings</a>
+                  ><AiOutlineSetting className='text-2xl mr-1'/>Settings</a>
                 </div>
                 <div className='w-1/4'>
-                  <a className='cursor-pointer'
+                  <a className='cursor-pointer flex'
                           onClick={() => setPage(PAGE.logs)}
-                  >Logs</a>
+                  ><RxActivityLog className='text-2xl mr-1'/>Logs</a>
                 </div>
                 {/*<div className='w-1/6'></div>*/}
               </div>
-
             </div>
           </div>
         </header>
