@@ -9,7 +9,7 @@ scrape_configs:
   - job_name: 'meters'
     metrics_path: '/actuator/prometheus'
     static_configs:
-      - targets: ['meters-collector:8080']
+      - targets: ['meters-collector']
 
   - job_name: 'node'
     static_configs:

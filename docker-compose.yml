@@ -7,25 +7,24 @@ services:
     depends_on:
       - mysql
     ports:
-      - "8080:8080"
+      - "80:80"
     volumes:
-      - /home/user/meters-collector:/var/log/spring
+      - /var/meters-collector:/var/log/spring
 
   mysql:
     image: mysql:latest
     container_name: mysql
     volumes:
-      - /home/user/meters-collector/mysql:/var/lib/mysql
-      - /home/user/meters-collector/my.cnf:/etc/mysql/my.cnf
+      - /var/meters-collector/mysql:/var/lib/mysql
+      - /var/meters-collector/my.cnf:/etc/mysql/my.cnf
     restart: unless-stopped
     ports:
       - 3306:3306
     environment:
-      MYSQL_ROOT_PASSWORD: 090980
+      MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: meters
       MYSQL_USER: meters
       MYSQL_PASSWORD: meters
-#      TZ: Europe/Budapest
 
   node-exporter:
     image: prom/node-exporter:latest
@@ -52,8 +51,8 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - /home/user/meters-collector/prometheus-conf:/etc/prometheus
-      - /home/user/meters-collector/prometheus-data:/prometheus
+      - /var/meters-collector/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - /var/meters-collector/prometheus:/prometheus
     command:
       - '--storage.tsdb.retention.time=32d'
       - '--config.file=/etc/prometheus/prometheus.yml'
@@ -68,4 +67,4 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - /home/user/meters-collector/grafana-data:/var/lib/grafana
+      - /var/meters-collector/grafana:/var/lib/grafana

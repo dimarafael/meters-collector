@@ -38,6 +38,10 @@ function SubscribingComponent() {
                                                border box-border rounded mb-3 mx-auto hover:shadow'>
                         <div className={`h-1 rounded-t ${item.online ? 'bg-[#046a38]' : 'bg-[#e1251b]'}`}></div>
                         <div className='flex text-left bg-neutral-200'>
+                            <div className='w-1/4 text-right'>Position:</div>
+                            <div className='pl-1 font-semibold'>{item.position}</div>
+                        </div>
+                        <div className='flex text-left bg-neutral-200'>
                             <div className='w-1/4 text-right'>Title English:</div>
                             <div className='pl-1 font-semibold'>{item.titleEn}</div>
                         </div>

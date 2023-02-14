@@ -9,6 +9,8 @@ interface PupUpAddNewMeterProps{
 }
 
 export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNewMeterProps){
+    const [position, setPosition] = useState(meter?.position || '')
+    const [positionErr, setPositionErr] = useState(false)
     const [titleEn, setTitleEn] = useState(meter?.titleEn || '')
     const [titleEnErr, setTitleEnErr] = useState(false)
     const [titleHu, setTitleHu] = useState(meter?.titleHu || '')
@@ -49,6 +51,7 @@ export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNew
     },[])
 
     function formValidate(){
+        setPositionErr(position=='' || position == undefined || position.match("^[A-Za-z0-9_]+$")==null)
         setTitleEnErr(titleEn=='' || titleEn == undefined)
         setTitleHuErr(titleHu=='' || titleHu == undefined)
         setIpAddressErr(ipAddress =='' || ipAddress == undefined)
@@ -64,7 +67,9 @@ export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNew
 
     function formValidateAndSubmit(){
         formValidate()
-        let isValid = (!titleEnErr &&
+        let isValid = (
+            !positionErr &&
+            !titleEnErr &&
             !titleHuErr &&
             !ipAddressErr &&
             !unitIdErr &&
@@ -94,6 +99,7 @@ export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNew
                     id: meter?.id || 0,
                     ipAddress: ipAddress,
                     pollingEnable: pollingEnable,
+                    position: position,
                     titleEn: titleEn,
                     titleHu: titleHu,
                     unitId: unitId || 0,
@@ -119,6 +125,20 @@ export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNew
                             rounded bg-white shadow'>
                 <div className='bg-[#046a38] rounded-t text-white py-3 text-2xl'>
                     {`${isNewMeter?'Add':'Edit'} meter`}
+                </div>
+
+                <div className='flex text-left bg-neutral-200 px-1 py-1'>
+                    <div className=' w-1/4 text-right'>Position:</div>
+                    <div className=' flex-auto pl-1'>
+                        <input type='text' className={`w-full rounded px-1 outline-none
+                        border border-solid transition ease-in-out
+                        focus:border-[#046a38]
+                        ${positionErr ? 'border-red-700':'border-gray-300'}`}
+                               value={position}
+                               onChange={(val)=>{setPosition(val.target.value)}}
+                               onBlur={()=>{setPositionErr(position=='' || position == undefined || position.match("^[A-Za-z0-9_]+$")==null)}}
+                        />
+                    </div>
                 </div>
 
                 <div className='flex text-left bg-neutral-200 px-1 py-1'>

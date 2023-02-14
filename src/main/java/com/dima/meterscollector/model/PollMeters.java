@@ -111,6 +111,7 @@ public class PollMeters {
             if(meter.isPollingEnable()){
                 LocalTime startTime = LocalTime.now();//For polling time calculation
                 MeterData meterData = new MeterData(); //Object for collecting data from one meter
+                meterData.setPosition(meter.getPosition());
                 meterData.setTitleEn(meter.getTitleEn());
                 meterData.setTitleHu(meter.getTitleHu());
                 meterData.setId(meter.getId());

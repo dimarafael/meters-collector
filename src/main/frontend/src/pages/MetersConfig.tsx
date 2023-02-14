@@ -12,13 +12,16 @@ export function MetersConfig() {
     const [showAddMeterPopUp, setShowAddMeterPopUp] = useState(false)
     const [meterForPopUp, setMeterForPopUp] = useState<meterConfiguration|null>(null)
     const [isNewMeterPopUp, setIsNewMeterPopUp] = useState(false)
+    const [access, setAccess] = useState(true) //show message "Access denied!"
 
     function getMeters(){
         return fetch('/api/meter_config')
             .then(response => {
                 if (!response.ok) {
+                    setAccess(false)
                     throw new Error(response.statusText)
                 }
+                setAccess(true)
                 return response.json().then(data => data as meterConfiguration)
             }).then(response => {
                 // @ts-ignore
@@ -59,21 +62,31 @@ export function MetersConfig() {
     // @ts-ignore
     return (
         <div className='flex flex-wrap mx-auto xl:max-w-screen-xl'>
+            {!access &&
+                <div className='flex mx-auto text-3xl font-semibold text-red-600'>
+                    <p>Access denied!</p>
+                </div>
+            }
             <div className='flex w-full justify-center my-3'>
+
                 <div className='flex justify-center items-center w-52 text-3xl py-1 box-border border rounded
                 transition ease-in-out hover:shadow hover:text-[#377dff] active:bg-neutral-200'
-                onClick={()=>{
-                    setMeterForPopUp(null)
-                    setIsNewMeterPopUp(true)
-                    setShowAddMeterPopUp(true)
-                }}>
-                    <MdAddCircleOutline/>
+                    onClick={()=>{
+                        setMeterForPopUp(null)
+                        setIsNewMeterPopUp(true)
+                        setShowAddMeterPopUp(true)
+                    }}>
+                        <MdAddCircleOutline/>
                 </div>
             </div>
             {data && data.map((item:meterConfiguration) => (
                 <div key={item.id} className='accent-neutral-700 w-[49%] flex flex-col
                                                border box-border rounded mb-3 mx-auto hover:shadow'>
                     <div className={`h-1 rounded-t ${item.pollingEnable ? 'bg-[#046a38]' : 'bg-[#e1251b]'}`}></div>
+                    <div className='flex text-left bg-neutral-200'>
+                        <div className='w-1/4 text-right'>Position:</div>
+                        <div className='pl-1 font-semibold'>{item.position}</div>
+                    </div>
                     <div className='flex text-left bg-neutral-200'>
                         <div className='w-1/4 text-right'>Title English:</div>
                         <div className='pl-1 font-semibold'>{item.titleEn}</div>

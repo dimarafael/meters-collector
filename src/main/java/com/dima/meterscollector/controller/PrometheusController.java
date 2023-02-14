@@ -29,13 +29,13 @@ public class PrometheusController {
         for(MeterConfiguration meter : meterConfigurations){
             if(meter.isPollingEnable()){
                 if(meter.isAddrPEnable()){
-                    Gauge.builder("meter"+meter.getId().toString()+"_p", ()->f.apply( meter.getId(),0)).description("Active power " + meter.getTitleEn()).register(meterRegistry);
+                    Gauge.builder("meter_"+meter.getPosition()+"_P", ()->f.apply( meter.getId(),0)).description("Active power " + meter.getTitleEn()).register(meterRegistry);
                 }
                 if(meter.isAddrQEnable()){
-                    Gauge.builder("meter"+meter.getId().toString()+"_q", ()->f.apply( meter.getId(),1)).description("Reactive power " + meter.getTitleEn()).register(meterRegistry);
+                    Gauge.builder("meter_"+meter.getPosition()+"_Q", ()->f.apply( meter.getId(),1)).description("Reactive power " + meter.getTitleEn()).register(meterRegistry);
                 }
                 if(meter.isAddrSEnable()){
-                    Gauge.builder("meter"+meter.getId().toString()+"_s", ()->f.apply( meter.getId(),2)).description("Apparent power " + meter.getTitleEn()).register(meterRegistry);
+                    Gauge.builder("meter_"+meter.getPosition()+"_S", ()->f.apply( meter.getId(),2)).description("Apparent power " + meter.getTitleEn()).register(meterRegistry);
                 }
             }
         }

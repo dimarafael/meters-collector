@@ -46,6 +46,7 @@ public class MeterConfigController {
     public MeterConfiguration putMeter(@PathVariable long id, @RequestBody MeterConfiguration meterConf){
         MeterConfiguration updateMeterConf = meterConfigRepo.findById(id)
                 .orElseThrow(NotFoundException::new);
+        updateMeterConf.setPosition(meterConf.getPosition());
         updateMeterConf.setTitleEn(meterConf.getTitleEn());
         updateMeterConf.setTitleHu(meterConf.getTitleHu());
         updateMeterConf.setPollingEnable(meterConf.isPollingEnable());

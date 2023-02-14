@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class MeterData {
+    private String position;
     private String titleEn;
     private String titleHu;
     private float p;

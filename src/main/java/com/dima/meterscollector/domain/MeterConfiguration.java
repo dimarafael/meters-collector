@@ -14,6 +14,7 @@ public class MeterConfiguration {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String position;
     private String titleEn;
     private String titleHu;
     private boolean pollingEnable;

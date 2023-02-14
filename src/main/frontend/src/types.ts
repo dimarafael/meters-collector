@@ -6,6 +6,7 @@
 
 export interface meterConfiguration {
     "id": number,
+    "position":string,
     "titleEn": string,
     "titleHu": string,
     "pollingEnable": boolean,
@@ -29,6 +30,7 @@ export interface meterConfiguration {
 }
 
 export interface meterData{
+    "position":string,
     "titleEn": string,
     "titleHu": string,
     "p": number,
