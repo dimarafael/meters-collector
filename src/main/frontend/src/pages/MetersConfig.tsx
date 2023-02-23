@@ -145,17 +145,22 @@ export function MetersConfig() {
                                 </div>
                                 <div className='flex w-1/2 flex-col'>
                                     <div className='flex'>
-                                        <div className='w-9/12 text-right'>Active energy:</div>
+                                        <div className='w-9/12 text-right'>Active import:</div>
                                         <div className='w-1/6 text-center'><input type='checkbox' checked={item.addrEaEnable} readOnly={true}/></div>
                                         <div className='w-3/12 text-left'>{item.addrEa}</div>
                                     </div>
                                     <div className='flex'>
-                                        <div className='w-9/12 text-right'>Reactive energy:</div>
+                                        <div className='w-9/12 text-right'>Active export:</div>
+                                        <div className='w-1/6 text-center'><input type='checkbox' checked={item.addrEadEnable} readOnly={true}/></div>
+                                        <div className='w-3/12 text-left'>{item.addrEad}</div>
+                                    </div>
+                                    <div className='flex'>
+                                        <div className='w-9/12 text-right'>Reactive import:</div>
                                         <div className='w-1/6 text-center'><input type='checkbox' checked={item.addrErEnable} readOnly={true}/></div>
                                         <div className='w-3/12 text-left'>{item.addrEr}</div>
                                     </div>
                                     <div className='flex'>
-                                        <div className='w-9/12 text-right'>Generated energy:</div>
+                                        <div className='w-9/12 text-right'>Reactive export:</div>
                                         <div className='w-1/6 text-center'><input type='checkbox' checked={item.addrEgEnable} readOnly={true}/></div>
                                         <div className='w-3/12 text-left'>{item.addrEg}</div>
                                     </div>

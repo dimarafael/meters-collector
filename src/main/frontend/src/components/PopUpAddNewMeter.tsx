@@ -32,6 +32,9 @@ export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNew
     const [addrEaEnable, setAddrEaEnable] = useState(meter?.addrEaEnable || false)
     const [addrEa, setAddrEa] = useState(meter?.addrEa)
     const [addrEaErr, setAddrEaErr] = useState(false)
+    const [addrEadEnable, setAddrEadEnable] = useState(meter?.addrEadEnable || false)
+    const [addrEad, setAddrEad] = useState(meter?.addrEad)
+    const [addrEadErr, setAddrEadErr] = useState(false)
     const [addrErEnable, setAddrErEnable] = useState(meter?.addrErEnable || false)
     const [addrEr, setAddrEr] = useState(meter?.addrEr)
     const [addrErErr, setAddrErErr] = useState(false)
@@ -60,6 +63,7 @@ export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNew
         setAddrQErr(addrQ == undefined)
         setAddrSErr(addrS == undefined)
         setAddrEaErr(addrEa == undefined)
+        setAddrEadErr(addrEad == undefined)
         setAddrErErr(addrEr == undefined)
         setAddrEgErr(addrEg == undefined)
         setAddrEsErr(addrEs == undefined)
@@ -77,6 +81,7 @@ export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNew
             !addrQErr &&
             !addrSErr &&
             !addrEaErr &&
+            !addrEadErr &&
             !addrErErr &&
             !addrEgErr &&
             !addrEsErr)
@@ -84,6 +89,8 @@ export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNew
             newMeter = {
                     addrEa: addrEa || 0,
                     addrEaEnable: addrEaEnable,
+                    addrEad: addrEad || 0,
+                    addrEadEnable: addrEadEnable,
                     addrEg: addrEg || 0,
                     addrEgEnable: addrEgEnable,
                     addrEr: addrEr || 0,
@@ -121,7 +128,7 @@ export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNew
         <div>
             <div className='fixed top-0 left-0 z-10 h-full w-full bg-gray-500 opacity-80'
                  onClick={onCancel}></div>
-            <div className='flex flex-col fixed z-10 w-[700px] top-28 left-1/2 ml-[-350px]
+            <div className='flex flex-col fixed z-10 w-[800px] top-28 left-1/2 ml-[-400px]
                             rounded bg-white shadow'>
                 <div className='bg-[#046a38] rounded-t text-white py-3 text-2xl'>
                     {`${isNewMeter?'Add':'Edit'} meter`}
@@ -294,7 +301,7 @@ export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNew
                         <div className='flex w-1/2 flex-col'>
 
                             <div className='flex py-1'>
-                                <div className='w-3/6 text-right'>Active energy:</div>
+                                <div className='w-3/6 text-right'>Active energy import:</div>
                                 <div className='w-1/6 text-center'>
                                     <input type='checkbox' checked={addrEaEnable}
                                            onChange={(val)=>{setAddrEaEnable(val.target.checked)}}
@@ -316,7 +323,29 @@ export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNew
                             </div>
 
                             <div className='flex py-1'>
-                                <div className='w-3/6 text-right'>Reactive energy:</div>
+                                <div className='w-3/6 text-right'>Active energy export:</div>
+                                <div className='w-1/6 text-center'>
+                                    <input type='checkbox' checked={addrEadEnable}
+                                           onChange={(val)=>{setAddrEadEnable(val.target.checked)}}
+                                    />
+                                </div>
+                                <div className='w-2/6 text-left'>
+                                    <input type='number' className={`w-full rounded px-1 outline-none
+                                    border border-solid transition ease-in-out
+                                    focus:border-[#046a38]
+                                    ${addrEadErr ? 'border-red-700':'border-gray-300'}`}
+                                           value={addrEad}
+                                           onChange={(val)=>{
+                                               setAddrEad(getInt(val.target.value))
+                                           }}
+                                           onBlur={(val)=>{
+                                               setAddrEadErr(val.target.value == '' || addrEad == undefined)}}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className='flex py-1'>
+                                <div className='w-3/6 text-right'>Reactive energy import:</div>
                                 <div className='w-1/6 text-center'>
                                     <input type='checkbox' checked={addrErEnable}
                                            onChange={(val)=>{setAddrErEnable(val.target.checked)}}
@@ -338,7 +367,7 @@ export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNew
                             </div>
 
                             <div className='flex py-1'>
-                                <div className='w-3/6 text-right'>Generated energy:</div>
+                                <div className='w-3/6 text-right'>Reactive energy export:</div>
                                 <div className='w-1/6 text-center'>
                                     <input type='checkbox' checked={addrEgEnable}
                                            onChange={(val)=>{setAddrEgEnable(val.target.checked)}}

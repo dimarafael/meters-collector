@@ -12,18 +12,17 @@ public class MetersDb {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private float ea;
-    private float er;
-    private float eg;
-    private float es;
+    private float ea; // Active energy
+    private float ead; // Active energy delivered
+    private float er; // Reactive energy
+    private float eg; // Generated energy
+    private float es; // Apparent energy
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
-//    private Date dateTime;
     private OffsetDateTime dateTime;
 
     @PrePersist
     private void onCreate(){
-//        dateTime = new Date();
         dateTime = OffsetDateTime.now();
     }
 

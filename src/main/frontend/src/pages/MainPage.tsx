@@ -65,22 +65,26 @@ function SubscribingComponent() {
                                     <div className='w-1/2 text-left pl-4'>Apparent</div>
                                     <div className='w-1/2 text-left'>{getRealStr(item.s)} kVA</div>
                                 </div>
-                                <div className='text-sm text-left pl-1 pt-1.5 text-neutral-300'>
+                                <div className='text-sm text-left pl-1 pt-9 text-neutral-300'>
                                     {item.id}:Polling time: {item.pollTime/1000000}s
                                 </div>
                             </div>
                             <div className='flex w-1/2 flex-col'>
                                 <div className='font-semibold border-b mx-1'>Energy</div>
                                 <div className='flex border-b mx-1'>
-                                    <div className='w-1/2 text-left pl-4'>Active</div>
+                                    <div className='w-1/2 text-left pl-4'>Active import</div>
                                     <div className='w-1/2 text-left'>{getRealStr(item.ea)} kWh</div>
                                 </div>
                                 <div className='flex border-b mx-1'>
-                                    <div className='w-1/2 text-left pl-4'>Reactive</div>
+                                    <div className='w-1/2 text-left pl-4'>Active export</div>
+                                    <div className='w-1/2 text-left'>{getRealStr(item.ead)} kWh</div>
+                                </div>
+                                <div className='flex border-b mx-1'>
+                                    <div className='w-1/2 text-left pl-4'>Reactive import</div>
                                     <div className='w-1/2 text-left'>{getRealStr(item.er)} kvarh</div>
                                 </div>
                                 <div className='flex border-b mx-1'>
-                                    <div className='w-1/2 text-left pl-4'>Generated</div>
+                                    <div className='w-1/2 text-left pl-4'>Reactive export</div>
                                     <div className='w-1/2 text-left'>{getRealStr(item.eg)} kvarh</div>
                                 </div>
                                 <div className='flex mx-1'>
