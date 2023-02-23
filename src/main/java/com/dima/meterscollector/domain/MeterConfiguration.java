@@ -29,6 +29,8 @@ public class MeterConfiguration {
     private boolean addrSEnable;
     private int addrEa; // Total active energy
     private boolean addrEaEnable;
+    private int addrEad; // Total active energy delivered
+    private boolean addrEadEnable;
     private int addrEr; // Total reactive energy
     private boolean addrErEnable;
     private int addrEg; // Total generated energy

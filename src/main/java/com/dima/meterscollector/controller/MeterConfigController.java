@@ -60,6 +60,8 @@ public class MeterConfigController {
         updateMeterConf.setAddrSEnable(meterConf.isAddrSEnable());
         updateMeterConf.setAddrEa(meterConf.getAddrEa());
         updateMeterConf.setAddrEaEnable(meterConf.isAddrEaEnable());
+        updateMeterConf.setAddrEad(meterConf.getAddrEad());
+        updateMeterConf.setAddrEadEnable(meterConf.isAddrEadEnable());
         updateMeterConf.setAddrEr(meterConf.getAddrEr());
         updateMeterConf.setAddrErEnable(meterConf.isAddrErEnable());
         updateMeterConf.setAddrEg(meterConf.getAddrEg());

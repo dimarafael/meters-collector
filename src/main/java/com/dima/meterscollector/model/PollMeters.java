@@ -108,7 +108,6 @@ public class PollMeters {
     SimpMessagingTemplate template;
 
     @Scheduled(fixedDelay = 5000)
-//    @Scheduled()
     public void pollMeters(){
         meterDataListCollecting.clear();
         if(!isMeterConfigActual){
@@ -185,6 +184,22 @@ public class PollMeters {
                                     .filter(data -> meter.getId().equals(data.getId()))
                                     .findAny().orElse(null);
                             if(previousData != null) meterData.setEa(previousData.getEa());
+                        }
+                    }
+
+                    if(meter.isAddrEadEnable()){
+                        try {
+                            meterData.setEad(pollFloat(meter.getUnitId(),meter.getAddrEad(),con, meter.isDataInKilo()));
+                        } catch (Exception e){
+                            logger.error("Modbus not response: " + meter.getIpAddress()
+                                    + " unitId=" + meter.getUnitId()
+                                    + " register=" + meter.getAddrEad()
+                                    + ". Exception: " + e);
+                            meterData.setOnline(false);
+                            MeterData previousData = meterDataList.stream()
+                                    .filter(data -> meter.getId().equals(data.getId()))
+                                    .findAny().orElse(null);
+                            if(previousData != null) meterData.setEad(previousData.getEad());
                         }
                     }
 
