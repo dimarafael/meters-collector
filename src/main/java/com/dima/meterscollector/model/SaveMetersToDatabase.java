@@ -30,7 +30,7 @@ public class SaveMetersToDatabase {
         for(MeterData meterData : meterDataList){
             MetersDb metersDb = new MetersDb();
             metersDb.setEa(meterData.getEa());
-            metersDb.setEad(metersDb.getEad());
+            metersDb.setEad(meterData.getEad());
             metersDb.setEr(meterData.getEr());
             metersDb.setEg(meterData.getEg());
             metersDb.setEs(meterData.getEs());
