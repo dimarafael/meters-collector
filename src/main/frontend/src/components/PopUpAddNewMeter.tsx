@@ -203,7 +203,7 @@ export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNew
                         </div>
 
                         <div className='w-2/12 text-right'>
-                            data in kilo:
+                            swapped/kilo:
                         </div>
 
                         <div className='w-1/12 text-left pl-2'>

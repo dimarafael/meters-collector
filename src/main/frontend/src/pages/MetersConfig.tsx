@@ -68,7 +68,7 @@ export function MetersConfig() {
                 </div>
             }
             <div className='flex w-full justify-center my-3'>
-
+                {access &&
                 <div className='flex justify-center items-center w-52 text-3xl py-1 box-border border rounded
                 transition ease-in-out hover:shadow hover:text-[#377dff] active:bg-neutral-200'
                     onClick={()=>{
@@ -78,6 +78,7 @@ export function MetersConfig() {
                     }}>
                         <MdAddCircleOutline/>
                 </div>
+                }
             </div>
             {data && data.map((item:meterConfiguration) => (
                 <div key={item.id} className='accent-neutral-700 w-[49%] flex flex-col
@@ -111,7 +112,7 @@ export function MetersConfig() {
                                     {item.unitId}
                                 </div>
                                 <div className='w-2/12 text-right'>
-                                    data in kilo:
+                                    swapp/kilo:
                                 </div>
                                 <div className='w-1/12 text-left pl-2'>
                                     <input type='checkbox' checked={item.dataInKilo} readOnly={true}/>

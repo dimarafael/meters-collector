@@ -78,6 +78,16 @@ public class PollMeters {
         return ModbusUtil.registersToFloat(arr);
     }
 
+    private float getSwappedFloatFromRegisters(Register[] registers){
+        if(registers.length<2) throw new NullPointerException();
+        byte[] arr = new byte[4];
+        arr[0] = res.getRegister(0).toBytes()[0];
+        arr[1] = res.getRegister(0).toBytes()[1];
+        arr[2] = res.getRegister(1).toBytes()[0];
+        arr[3] = res.getRegister(1).toBytes()[1];
+        return ModbusUtil.registersToFloat(arr);
+    }
+
     private float pollFloat(byte unitId, int addr, TCPMasterConnection con, boolean dataInKilo) throws ModbusException {
         req = new ReadMultipleRegistersRequest(addr,2);
         req.setUnitID(unitId);
@@ -85,7 +95,7 @@ public class PollMeters {
         trans.setRequest(req);
         trans.execute();
         res = (ReadMultipleRegistersResponse) trans.getResponse();
-        return dataInKilo ? getFloatFromRegisters(res.getRegisters()) : getFloatFromRegisters(res.getRegisters())/1000;
+        return dataInKilo ? getSwappedFloatFromRegisters(res.getRegisters()) : getFloatFromRegisters(res.getRegisters())/1000;
     }
 
     @Autowired

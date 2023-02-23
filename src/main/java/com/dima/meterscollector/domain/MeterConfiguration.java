@@ -1,5 +1,6 @@
 package com.dima.meterscollector.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -36,6 +37,7 @@ public class MeterConfiguration {
     private boolean addrEsEnable;
     private boolean dataInKilo;
 
+    @JsonIgnore
     @OneToMany(orphanRemoval = true, cascade = CascadeType.PERSIST, mappedBy = "meterConfiguration")
     private List<MetersDb> metersDbs;
 

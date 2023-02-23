@@ -1,5 +1,4 @@
 import {useEffect, useState} from "react";
-import {text} from "stream/consumers";
 
 export function LogsPage(){
     const [log, setLog] = useState('')
@@ -10,7 +9,7 @@ export function LogsPage(){
             .then(text => setLog(text))
     },[])
     return(
-        <div className='flex w-full text-left text-sm whitespace-pre-wrap'>
+        <div className='flex w-full text-left text-sm whitespace-pre-wrap px-2'>
             {log}
         </div>
     )
