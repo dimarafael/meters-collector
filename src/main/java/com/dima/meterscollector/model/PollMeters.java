@@ -135,13 +135,17 @@ public class PollMeters {
                     if(meter.isAddrPEnable()){
                         try {
                             meterData.setP(pollFloat(meter.getUnitId(),meter.getAddrP(),con, meter.isDataInKilo()));
-                        } catch (Exception e){
-                            logger.error("Modbus not response: " + meter.getIpAddress()
-                                    + " unitId=" + meter.getUnitId()
-                                    + " register=" + meter.getAddrP()
-                                    + ". Exception: " + e);
-                            meterData.setOnline(false);
-                            meterData.setP(0);
+                        } catch (Exception e1){
+                            try { // second poll if error polling
+                                meterData.setP(pollFloat(meter.getUnitId(),meter.getAddrP(),con, meter.isDataInKilo()));
+                            } catch (Exception e) {
+                                logger.error("Modbus not response: " + meter.getIpAddress()
+                                        + " unitId=" + meter.getUnitId()
+                                        + " register=" + meter.getAddrP()
+                                        + ". Exception: " + e);
+                                meterData.setOnline(false);
+                                meterData.setP(0);
+                            }
                         }
                     }
 
