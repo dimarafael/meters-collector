@@ -34,7 +34,7 @@ function SubscribingComponent() {
         <div className='flex flex-wrap mx-auto py-2 xl:max-w-screen-xl'>
             {metersData &&
                 metersData.map((item:meterData)=>(
-                    <div key={item.id} className='accent-neutral-700 w-[49%] flex flex-col
+                    <div key={item.id} className='accent-neutral-700 w-[49%] min-w-[600px] flex flex-col
                                                border box-border rounded mb-3 mx-auto hover:shadow'>
                         <div className={`h-1 rounded-t ${item.online ? 'bg-[#046a38]' : 'bg-[#e1251b]'}`}></div>
                         <div className='flex text-left bg-neutral-200'>
