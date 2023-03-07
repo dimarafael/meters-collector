@@ -20,14 +20,14 @@ function App() {
 
             <div className='flex flex-auto  box-border'>
               <div className='box-border w-48'>
-                <img className='py-2.5' src={logo} alt='Kometa logo'/>
+                <img className='py-2.5 pl-1 xl:pl-0' src={logo} alt='Kometa logo'/>
               </div>
 
             </div>
             <div className='flex flex-col w-4/6'>
               <div className='flex flex-auto justify-end'>
                 <div className='flex-auto text-white uppercase sm:text-left box-border
-                                text-base sm:text-4xl'>
+                                text-base sm:text-4xl pt-5 sm:pt-0'>
                   Meters collector
                 </div>
                 {/*<div className=''>Login</div>*/}
@@ -65,7 +65,7 @@ function App() {
           {page === PAGE.logs && <LogsPage/>}
         </div>
         <footer className='bg-[#aaac24]'>
-          <div className=' my-1 mx-auto xl:max-w-screen-xl text-white text-lg text-left'>
+          <div className=' my-1 mx-auto xl:max-w-screen-xl text-white text-lg text-left pl-1'>
             KOMETA 99 ZRT
           </div>
         </footer>

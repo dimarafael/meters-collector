@@ -53,45 +53,52 @@ function SubscribingComponent() {
                         </div>
 
                         <div className='flex py-1'>
-                            <div className='flex w-1/2 flex-col border-r box-border'>
+                            <div className='flex w-1/3 sm:w-1/2 flex-col border-r box-border'>
                                 <div className='font-semibold border-b mx-1'>Power</div>
                                 <div className='flex border-b mx-1'>
-                                    <div className='w-1/2 text-left pl-4'>Active</div>
-                                    <div className='w-1/2 text-left'>{getRealStr(item.p)} kW</div>
+                                    <div className='w-1/2 text-left pl-4 hidden sm:flex'>Active</div>
+                                    <div className='w-1/5 text-left pl-1 sm:hidden'>P</div>
+                                    <div className='w-4/5 sm:w-1/2 text-left'>{getRealStr(item.p)} kW</div>
                                 </div>
                                 <div className='flex border-b mx-1'>
-                                    <div className='w-1/2 text-left pl-4'>Reactive</div>
-                                    <div className='w-1/2 text-left'>{getRealStr(item.q)} kvar</div>
+                                    <div className='w-1/2 text-left pl-4 hidden sm:flex'>Reactive</div>
+                                    <div className='w-1/5 text-left pl-1 sm:hidden'>Q</div>
+                                    <div className='w-4/5 sm:w-1/2 text-left'>{getRealStr(item.q)} kvar</div>
                                 </div>
                                 <div className='flex mx-1'>
-                                    <div className='w-1/2 text-left pl-4'>Apparent</div>
-                                    <div className='w-1/2 text-left'>{getRealStr(item.s)} kVA</div>
+                                    <div className='w-1/2 text-left pl-4 hidden sm:flex'>Apparent</div>
+                                    <div className='w-1/5 text-left pl-1 sm:hidden'>S</div>
+                                    <div className='w-4/5 sm:w-1/2 text-left'>{getRealStr(item.s)} kVA</div>
                                 </div>
-                                <div className='text-sm text-left pl-1 pt-9 text-neutral-300'>
+                                <div className='hidden sm:flex text-sm text-left pl-1 pt-9 text-neutral-300'>
                                     {item.id}:Polling time: {item.pollTime/1000000}s
                                 </div>
                             </div>
-                            <div className='flex w-1/2 flex-col'>
+                            <div className='flex w-2/3 sm:w-1/2 flex-col'>
                                 <div className='font-semibold border-b mx-1'>Energy</div>
                                 <div className='flex border-b mx-1'>
-                                    <div className='w-1/2 text-left pl-4'>Active import</div>
-                                    <div className='w-1/2 text-left'>{getRealStr(item.ea)} kWh</div>
+                                    <div className='w-1/2 text-left pl-3 hidden sm:flex'>Active import</div>
+                                    <div className='w-1/3 text-left pl-1 sm:hidden'>{'Active ->'}</div>
+                                    <div className='w-2/3 sm:w-1/2 text-left pl-1 sm:pl-0'>{getRealStr(item.ea)} kWh</div>
                                 </div>
                                 <div className='flex border-b mx-1'>
-                                    <div className='w-1/2 text-left pl-4'>Active export</div>
-                                    <div className='w-1/2 text-left'>{getRealStr(item.ead)} kWh</div>
+                                    <div className='w-1/2 text-left pl-3 hidden sm:flex'>Active export</div>
+                                    <div className='w-1/3 text-left pl-1 sm:hidden'>{'Active <-'}</div>
+                                    <div className='w-2/3 sm:w-1/2 text-left pl-1 sm:pl-0'>{getRealStr(item.ead)} kWh</div>
                                 </div>
                                 <div className='flex border-b mx-1'>
-                                    <div className='w-1/2 text-left pl-4'>Reactive import</div>
-                                    <div className='w-1/2 text-left'>{getRealStr(item.er)} kvarh</div>
+                                    <div className='w-1/2 text-left pl-3 hidden sm:flex'>Reactive import</div>
+                                    <div className='w-1/3 text-left pl-1 sm:hidden'>{'Reactive ->'}</div>
+                                    <div className='w-2/3 sm:w-1/2 text-left pl-1 sm:pl-0'>{getRealStr(item.er)} kvarh</div>
                                 </div>
                                 <div className='flex border-b mx-1'>
-                                    <div className='w-1/2 text-left pl-4'>Reactive export</div>
-                                    <div className='w-1/2 text-left'>{getRealStr(item.eg)} kvarh</div>
+                                    <div className='w-1/2 text-left pl-3 hidden sm:flex'>Reactive export</div>
+                                    <div className='w-1/3 text-left pl-1 sm:hidden'>{'Reactive <-'}</div>
+                                    <div className='w-2/3 sm:w-1/2 text-left pl-1 sm:pl-0'>{getRealStr(item.eg)} kvarh</div>
                                 </div>
                                 <div className='flex mx-1'>
-                                    <div className='w-1/2 text-left pl-4'>Apparent</div>
-                                    <div className='w-1/2 text-left'>{getRealStr(item.es)} kVAh</div>
+                                    <div className='w-1/3 sm:w-1/2 text-left pl-1 sm:pl-3'>Apparent</div>
+                                    <div className='w-2/3 sm:w-1/2 text-left  pl-1 sm:pl-0'>{getRealStr(item.es)} kVAh</div>
                                 </div>
                             </div>
                         </div>
