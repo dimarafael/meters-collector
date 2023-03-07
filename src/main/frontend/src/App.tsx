@@ -26,12 +26,13 @@ function App() {
             </div>
             <div className='flex flex-col w-4/6'>
               <div className='flex flex-auto justify-end'>
-                <div className='flex-auto text-white text-4xl uppercase text-left  box-border '>
+                <div className='flex-auto text-white uppercase sm:text-left box-border
+                                text-base sm:text-4xl'>
                   Meters collector
                 </div>
                 {/*<div className=''>Login</div>*/}
               </div>
-              <div className='flex h-1/3 text-left text-white text-lg uppercase'>
+              <div className='hidden sm:flex h-1/3 text-left text-white text-lg uppercase'>
                 <div className='w-1/4'>
                   <a className='cursor-pointer flex'
                           onClick={() => setPage(PAGE.main)}

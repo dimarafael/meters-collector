@@ -10,7 +10,7 @@ export function MainPage(){
 
     return(
         <div>
-            {/*<StompSessionProvider url={"http://localhost:8080/websocket" } onConnect={getData}>*/}
+            {/*<StompSessionProvider url={"http://localhost/websocket" } onConnect={getData}>*/}
             <StompSessionProvider url={"/websocket"} onConnect={getData}>
                 <SubscribingComponent/>
             </StompSessionProvider>
@@ -34,8 +34,10 @@ function SubscribingComponent() {
         <div className='flex flex-wrap mx-auto py-2 xl:max-w-screen-xl'>
             {metersData &&
                 metersData.map((item:meterData)=>(
-                    <div key={item.id} className='accent-neutral-700 w-[49%] min-w-[600px] flex flex-col
-                                               border box-border rounded mb-3 mx-auto hover:shadow'>
+                    <div key={item.id} className='accent-neutral-700 flex flex-col
+                                                w-full sm:w-[49%] sm:min-w-[600px]
+                                               border box-border rounded mb-3 mx-auto hover:shadow
+                                               text-sm sm:text-lg '>
                         <div className={`h-1 rounded-t ${item.online ? 'bg-[#046a38]' : 'bg-[#e1251b]'}`}></div>
                         <div className='flex text-left bg-neutral-200'>
                             <div className='w-1/4 text-right'>Position:</div>
