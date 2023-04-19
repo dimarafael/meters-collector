@@ -76,6 +76,9 @@ public class MeterConfigController {
 
     @DeleteMapping("/{id}")
     public void deleteMeter(@PathVariable long id){
+        if(!meterConfigRepo.existsById(id)){
+            throw new NotFoundException();
+        }
         meterConfigRepo.deleteById(id);
         pollMeters.setMeterConfigActual(false);
     }
