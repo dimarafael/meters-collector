@@ -75,3 +75,29 @@ services:
       - GF_SMTP_FROM_NAME=Meters Collector
       - GF_SMTP_FROM_ADDRESS=meters.collector@kometa.hu
       - GF_SERVER_DOMAIN=10.0.10.64
+
+  influxdb:
+    image: influxdb:latest
+    container_name: influxdb
+    ports:
+      - "8086:8086"
+    volumes:
+      - /var/meters-collector/influxdb/data:/var/lib/influxdb2
+      - /var/meters-collector/influxdb/config:/etc/influxdb2
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=admin
+      - DOCKER_INFLUXDB_INIT_PASSWORD=admin12345
+      - DOCKER_INFLUXDB_INIT_ORG=kometa
+      - DOCKER_INFLUXDB_INIT_BUCKET=cooking-chambers
+
+  mosquitto:
+    image: eclipse-mosquitto:latest
+    container_name: mosquitto
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - /var/meters-collector/mosquitto/data:/mosquitto/data
+      - /var/meters-collector/mosquitto/config:/mosquitto/config
+      - /var/meters-collector/mosquitto/log:/mosquitto/log
