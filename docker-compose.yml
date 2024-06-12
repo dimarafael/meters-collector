@@ -101,3 +101,13 @@ services:
       - /var/meters-collector/mosquitto/data:/mosquitto/data
       - /var/meters-collector/mosquitto/config:/mosquitto/config
       - /var/meters-collector/mosquitto/log:/mosquitto/log
+
+  telegraf:
+    image: telegraf:latest
+    container_name: telegraf
+    depends_on:
+      - mosquitto
+      - influxdb
+    volumes:
+      - /var/meters-collector/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+
