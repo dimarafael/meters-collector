@@ -3,7 +3,7 @@ services:
     build: .
     image: meters-collector
     container_name: meters-collector
-    restart: unless-stopped
+    restart: always
     depends_on:
       - mysql
     ports:
@@ -17,7 +17,7 @@ services:
     volumes:
       - /var/meters-collector/mysql:/var/lib/mysql
       - /var/meters-collector/my.cnf:/etc/mysql/my.cnf
-    restart: unless-stopped
+    restart: always
     ports:
       - 3306:3306
     environment:
@@ -29,7 +29,7 @@ services:
   node-exporter:
     image: prom/node-exporter:latest
     container_name: node-exporter
-    restart: unless-stopped
+    restart: always
     volumes:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
@@ -45,7 +45,7 @@ services:
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus
-    restart: unless-stopped
+    restart: always
     depends_on:
       - meters-collector
     ports:
@@ -61,10 +61,17 @@ services:
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
-    restart: unless-stopped
+    restart: always
     depends_on:
       - prometheus
     ports:
       - "3000:3000"
     volumes:
       - /var/meters-collector/grafana:/var/lib/grafana
+    environment:
+      - GF_SMTP_ENABLED=true
+      - GF_SMTP_HOST=komex16.kometa.hu:25
+      - GF_SMTP_SKIP_VERIFY=true
+      - GF_SMTP_FROM_NAME=Meters Collector
+      - GF_SMTP_FROM_ADDRESS=meters.collector@kometa.hu
+      - GF_SERVER_DOMAIN=10.0.10.64

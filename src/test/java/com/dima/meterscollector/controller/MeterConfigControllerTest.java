@@ -12,6 +12,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 
+import static org.assertj.core.api.BDDAssertions.then;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -78,11 +79,16 @@ class MeterConfigControllerTest {
         ObjectMapper objectMapper = new ObjectMapper();
         MeterConfiguration meter = MeterConfiguration.builder().ipAddress("1.1.1.4").build();
 
-        mockMvc.perform(post("/api/meter_config")
+        String response = mockMvc.perform(post("/api/meter_config")
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(meter)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("ipAddress").value("1.1.1.4"));
+                .andExpect(jsonPath("ipAddress").value("1.1.1.4"))
+                .andReturn().getResponse().getContentAsString();
+        MeterConfiguration meterConfiguration = objectMapper.readValue(response, MeterConfiguration.class);
+
+        then(meterConfigRepo.findById(meterConfiguration.getId()).isPresent()).isTrue();
+        then(meterConfigRepo.findById(meterConfiguration.getId()).get().getIpAddress()).isEqualTo(meter.getIpAddress());
     }
 
     @Test
@@ -92,18 +98,17 @@ class MeterConfigControllerTest {
         MeterConfiguration meter = MeterConfiguration.builder().ipAddress("1.1.1.4").build();
         Long id = meterConfigRepo.save(meter).getId();
         meter.setIpAddress("1.1.1.123");
-//        meter.setId(id);
 
         mockMvc.perform(put("/api/meter_config/{id}", id)
                         .contentType("application/json")
                         .content(objectMapper.writeValueAsString(meter)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("ipAddress").value("1.1.1.123"));
+                        .andExpect(status().isOk())
+                        .andExpect(jsonPath("ipAddress").value("1.1.1.123"));
 
         mockMvc.perform(put("/api/meter_config/1234")
                         .contentType("application/json")
                         .content(objectMapper.writeValueAsString(meter)))
-                .andExpect(status().isNotFound());
+                        .andExpect(status().isNotFound());
     }
 
     @Test
