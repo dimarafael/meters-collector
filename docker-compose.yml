@@ -54,7 +54,7 @@ services:
       - /var/meters-collector/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
       - /var/meters-collector/prometheus:/prometheus
     command:
-      - '--storage.tsdb.retention.time=32d'
+      - '--storage.tsdb.retention.time=90d'
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
 
@@ -91,23 +91,32 @@ services:
       - DOCKER_INFLUXDB_INIT_ORG=kometa
       - DOCKER_INFLUXDB_INIT_BUCKET=cooking-chambers
 
-  mosquitto:
-    image: eclipse-mosquitto:latest
-    container_name: mosquitto
+  # mosquitto:
+  #   image: eclipse-mosquitto:latest
+  #   container_name: mosquitto
+  #   ports:
+  #     - "1883:1883"
+  #     - "9001:9001"
+  #   volumes:
+  #     - /var/meters-collector/mosquitto/data:/mosquitto/data
+  #     - /var/meters-collector/mosquitto/config:/mosquitto/config
+  #     - /var/meters-collector/mosquitto/log:/mosquitto/log
+
+  # telegraf:
+  #   image: telegraf:latest
+  #   container_name: telegraf
+  #   depends_on:
+  #     - mosquitto
+  #     - influxdb
+  #   volumes:
+  #     - /var/meters-collector/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+
+  nodered:
+    image: nodered/node-red:latest
+    container_name: nodered
     ports:
-      - "1883:1883"
-      - "9001:9001"
+      - "1880:1880"
     volumes:
-      - /var/meters-collector/mosquitto/data:/mosquitto/data
-      - /var/meters-collector/mosquitto/config:/mosquitto/config
-      - /var/meters-collector/mosquitto/log:/mosquitto/log
-
-  telegraf:
-    image: telegraf:latest
-    container_name: telegraf
-    depends_on:
-      - mosquitto
-      - influxdb
-    volumes:
-      - /var/meters-collector/telegraf.conf:/etc/telegraf/telegraf.conf:ro
-
+      - /var/meters-collector/nodered:/data
+    environment:
+      - TZ=Europe/Budapest
