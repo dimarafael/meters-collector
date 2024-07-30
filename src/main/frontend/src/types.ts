@@ -27,8 +27,19 @@ export interface meterConfiguration {
     "addrEg": number,
     "addrEgEnable": boolean,
     "addrEs": number,
-    "addrEsEnable": boolean
+    "addrEsEnable": boolean,
     "dataInKilo": boolean,
+
+    "addrI1": number,
+    "arrdI2": number,
+    "arrdI3": number,
+    "addrU1": number,
+    "arrdU2": number,
+    "arrdU3": number,
+    "addrU12": number,
+    "arrdU23": number,
+    "addrU31": number,
+    "addrUIEnable": boolean
 }
 
 export interface meterData{
