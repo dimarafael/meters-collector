@@ -46,6 +46,17 @@ export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNew
     const [addrEsErr, setAddrEsErr] = useState(false)
     const [dataInKilo, setDataInKilo] = useState(meter?.dataInKilo|| false)
 
+    const [addrI1, setAddrI1] = useState(meter?.addrI1)
+    const [addrI2, setAddrI2] = useState(meter?.addrI2)
+    const [addrI3, setAddrI3] = useState(meter?.addrI3)
+    const [addrU1, setAddrU1] = useState(meter?.addrU1)
+    const [addrU2, setAddrU2] = useState(meter?.addrU2)
+    const [addrU3, setAddrU3] = useState(meter?.addrU3)
+    const [addrU12, setAddrU12] = useState(meter?.addrU12)
+    const [addrU23, setAddrU23] = useState(meter?.addrU23)
+    const [addrU31, setAddrU31] = useState(meter?.addrU31)
+    const [addrUIEnable, setAddrUIEnable] = useState(meter?.addrUIEnable || false)
+
     let newMeter:meterConfiguration
     // const [newMeter, setNewMeter] = useState<meterConfiguration>()
 
@@ -110,7 +121,18 @@ export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNew
                     titleEn: titleEn,
                     titleHu: titleHu,
                     unitId: unitId || 0,
-                    dataInKilo: dataInKilo
+                    dataInKilo: dataInKilo,
+
+                    addrI1: addrI1 || 0,
+                    addrI2: addrI2 || 0,
+                    addrI3: addrI3 || 0,
+                    addrU1: addrU1 || 0,
+                    addrU2: addrU2 || 0,
+                    addrU3: addrU3 || 0,
+                    addrU12: addrU12 || 0,
+                    addrU23: addrU23 || 0,
+                    addrU31: addrU31 || 0,
+                    addrUIEnable: addrUIEnable
                 }
         }
         return isValid

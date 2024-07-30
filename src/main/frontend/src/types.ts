@@ -31,13 +31,13 @@ export interface meterConfiguration {
     "dataInKilo": boolean,
 
     "addrI1": number,
-    "arrdI2": number,
-    "arrdI3": number,
+    "addrI2": number,
+    "addrI3": number,
     "addrU1": number,
-    "arrdU2": number,
-    "arrdU3": number,
+    "addrU2": number,
+    "addrU3": number,
     "addrU12": number,
-    "arrdU23": number,
+    "addrU23": number,
     "addrU31": number,
     "addrUIEnable": boolean
 }
