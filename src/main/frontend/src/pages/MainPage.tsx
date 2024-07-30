@@ -30,6 +30,12 @@ function SubscribingComponent() {
         } else return('0')
     }
 
+    const getIntStr = function (data: number): string {
+        if (data !== undefined) {
+            return (data.toFixed(0).toString())
+        } else return('0')
+    }
+
     return (
         <div className='flex flex-wrap mx-auto py-2 xl:max-w-screen-xl'>
             {metersData &&
@@ -65,11 +71,39 @@ function SubscribingComponent() {
                                     <div className='w-1/5 text-left pl-1 sm:hidden'>Q</div>
                                     <div className='w-4/5 sm:w-1/2 text-left'>{getRealStr(item.q)} kvar</div>
                                 </div>
-                                <div className='flex mx-1'>
+                                <div className='flex border-b mx-1'>
                                     <div className='w-1/2 text-left pl-4 hidden sm:flex'>Apparent</div>
                                     <div className='w-1/5 text-left pl-1 sm:hidden'>S</div>
                                     <div className='w-4/5 sm:w-1/2 text-left'>{getRealStr(item.s)} kVA</div>
                                 </div>
+
+                                <div className='border-b mx-1 hidden sm:flex'>
+                                    <div className="w-1/12 text-right">I1</div>
+                                    <div className="w-3/12 text-left">: {getIntStr(item.i1)}A</div>
+                                    <div className="w-1/12 text-right">I2</div>
+                                    <div className="w-3/12 text-left">: {getIntStr(item.i2)}A</div>
+                                    <div className="w-1/12 text-right">I3</div>
+                                    <div className="w-3/12 text-left">: {getIntStr(item.i3)}A</div>
+                                </div>
+
+                                <div className='border-b mx-1 hidden sm:flex'>
+                                    <div className="w-1/12 text-right">U1</div>
+                                    <div className="w-3/12 text-left">: {getIntStr(item.u1)}V</div>
+                                    <div className="w-1/12 text-right">U2</div>
+                                    <div className="w-3/12 text-left">: {getIntStr(item.u2)}V</div>
+                                    <div className="w-1/12 text-right">U3</div>
+                                    <div className="w-3/12 text-left">: {getIntStr(item.u3)}V</div>
+                                </div>
+
+                                <div className='border-b mx-1 hidden sm:flex'>
+                                    <div className="w-1/12 text-right">U12</div>
+                                    <div className="w-3/12 text-left">: {getIntStr(item.u12)}V</div>
+                                    <div className="w-1/12 text-right">U23</div>
+                                    <div className="w-3/12 text-left">: {getIntStr(item.u23)}V</div>
+                                    <div className="w-1/12 text-right">U31</div>
+                                    <div className="w-3/12 text-left">: {getIntStr(item.u31)}V</div>
+                                </div>
+
                                 <div className='hidden sm:flex text-sm text-left pl-1 pt-9 text-neutral-300'>
                                     {item.id}:Polling time: {item.pollTime/1000000}s
                                 </div>

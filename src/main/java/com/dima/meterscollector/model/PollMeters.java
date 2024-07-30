@@ -258,7 +258,7 @@ public class PollMeters {
                     if(meter.isAddrUIEnable()){
                         //I1
                         try {
-                            meterData.setI1(pollFloat(meter.getUnitId(),meter.getAddrI1(),con, meter.isDataInKilo()));
+                            meterData.setI1(pollFloat(meter.getUnitId(),meter.getAddrI1(),con, meter.isDataInKilo())*1000);
                         } catch (Exception e){
                             logger.error("Modbus not response: " + meter.getIpAddress()
                                     + " unitId=" + meter.getUnitId()
@@ -270,7 +270,7 @@ public class PollMeters {
 
                         //I2
                         try {
-                            meterData.setI2(pollFloat(meter.getUnitId(),meter.getAddrI2(),con, meter.isDataInKilo()));
+                            meterData.setI2(pollFloat(meter.getUnitId(),meter.getAddrI2(),con, meter.isDataInKilo())*1000);
                         } catch (Exception e){
                             logger.error("Modbus not response: " + meter.getIpAddress()
                                     + " unitId=" + meter.getUnitId()
@@ -282,7 +282,7 @@ public class PollMeters {
 
                         //I3
                         try {
-                            meterData.setI3(pollFloat(meter.getUnitId(),meter.getAddrI3(),con, meter.isDataInKilo()));
+                            meterData.setI3(pollFloat(meter.getUnitId(),meter.getAddrI3(),con, meter.isDataInKilo())*1000);
                         } catch (Exception e){
                             logger.error("Modbus not response: " + meter.getIpAddress()
                                     + " unitId=" + meter.getUnitId()
@@ -294,7 +294,7 @@ public class PollMeters {
 
                         //U1
                         try {
-                            meterData.setU1(pollFloat(meter.getUnitId(),meter.getAddrU1(),con, meter.isDataInKilo()));
+                            meterData.setU1(pollFloat(meter.getUnitId(),meter.getAddrU1(),con, meter.isDataInKilo())*1000);
                         } catch (Exception e){
                             logger.error("Modbus not response: " + meter.getIpAddress()
                                     + " unitId=" + meter.getUnitId()
@@ -306,7 +306,7 @@ public class PollMeters {
 
                         //U2
                         try {
-                            meterData.setU2(pollFloat(meter.getUnitId(),meter.getAddrU2(),con, meter.isDataInKilo()));
+                            meterData.setU2(pollFloat(meter.getUnitId(),meter.getAddrU2(),con, meter.isDataInKilo())*1000);
                         } catch (Exception e){
                             logger.error("Modbus not response: " + meter.getIpAddress()
                                     + " unitId=" + meter.getUnitId()
@@ -318,7 +318,7 @@ public class PollMeters {
 
                         //U3
                         try {
-                            meterData.setU3(pollFloat(meter.getUnitId(),meter.getAddrU3(),con, meter.isDataInKilo()));
+                            meterData.setU3(pollFloat(meter.getUnitId(),meter.getAddrU3(),con, meter.isDataInKilo())*1000);
                         } catch (Exception e){
                             logger.error("Modbus not response: " + meter.getIpAddress()
                                     + " unitId=" + meter.getUnitId()
@@ -330,7 +330,7 @@ public class PollMeters {
 
                         //U12
                         try {
-                            meterData.setU12(pollFloat(meter.getUnitId(),meter.getAddrU12(),con, meter.isDataInKilo()));
+                            meterData.setU12(pollFloat(meter.getUnitId(),meter.getAddrU12(),con, meter.isDataInKilo())*1000);
                         } catch (Exception e){
                             logger.error("Modbus not response: " + meter.getIpAddress()
                                     + " unitId=" + meter.getUnitId()
@@ -342,7 +342,7 @@ public class PollMeters {
 
                         //U23
                         try {
-                            meterData.setU23(pollFloat(meter.getUnitId(),meter.getAddrU23(),con, meter.isDataInKilo()));
+                            meterData.setU23(pollFloat(meter.getUnitId(),meter.getAddrU23(),con, meter.isDataInKilo())*1000);
                         } catch (Exception e){
                             logger.error("Modbus not response: " + meter.getIpAddress()
                                     + " unitId=" + meter.getUnitId()
@@ -354,7 +354,7 @@ public class PollMeters {
 
                         //U31
                         try {
-                            meterData.setU31(pollFloat(meter.getUnitId(),meter.getAddrU31(),con, meter.isDataInKilo()));
+                            meterData.setU31(pollFloat(meter.getUnitId(),meter.getAddrU31(),con, meter.isDataInKilo())*1000);
                         } catch (Exception e){
                             logger.error("Modbus not response: " + meter.getIpAddress()
                                     + " unitId=" + meter.getUnitId()
@@ -363,6 +363,7 @@ public class PollMeters {
                             meterData.setOnline(false);
                             meterData.setU31(0);
                         }
+
                     }
 
                 } catch (Exception e){

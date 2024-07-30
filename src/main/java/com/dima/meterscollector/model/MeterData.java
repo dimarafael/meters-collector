@@ -19,13 +19,13 @@ public class MeterData {
     private float pollTime; //in microseconds
     private boolean online;
 
-    private float I1;
-    private float I2;
-    private float I3;
-    private float U1;
-    private float U2;
-    private float U3;
-    private float U12;
-    private float U23;
-    private float U31;
+    private float i1;
+    private float i2;
+    private float i3;
+    private float u1;
+    private float u2;
+    private float u3;
+    private float u12;
+    private float u23;
+    private float u31;
 }
