@@ -18,4 +18,14 @@ public class MeterData {
     private long id; // Configuration id from db MeterConfiguration
     private float pollTime; //in microseconds
     private boolean online;
+
+    private float I1;
+    private float I2;
+    private float I3;
+    private float U1;
+    private float U2;
+    private float U3;
+    private float U12;
+    private float U23;
+    private float U31;
 }
