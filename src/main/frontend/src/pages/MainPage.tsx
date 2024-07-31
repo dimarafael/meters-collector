@@ -25,13 +25,13 @@ function SubscribingComponent() {
 
 
     const getRealStr = function (data: number): string {
-        if (data !== undefined) {
+        if (data !== undefined && typeof data === 'number') {
             return (data.toFixed(2).toString())
         } else return('0')
     }
 
     const getIntStr = function (data: number): string {
-        if (data !== undefined) {
+        if (data !== undefined && typeof data === 'number') {
             return (data.toFixed(0).toString())
         } else return('0')
     }

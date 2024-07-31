@@ -38,15 +38,15 @@ public class PrometheusController {
                     Gauge.builder("meter_"+meter.getPosition()+"_S", ()->f.apply( meter.getId(),2)).description("Apparent power " + meter.getTitleEn()).register(meterRegistry);
                 }
                 if(meter.isAddrUIEnable()){
-                    Gauge.builder("meter_"+meter.getPosition()+"_I1", ()->f.apply( meter.getId(),3)).description("Current I1" + meter.getTitleEn()).register(meterRegistry);
-                    Gauge.builder("meter_"+meter.getPosition()+"_I2", ()->f.apply( meter.getId(),4)).description("Current I2" + meter.getTitleEn()).register(meterRegistry);
-                    Gauge.builder("meter_"+meter.getPosition()+"_I3", ()->f.apply( meter.getId(),5)).description("Current I3" + meter.getTitleEn()).register(meterRegistry);
-                    Gauge.builder("meter_"+meter.getPosition()+"_U1", ()->f.apply( meter.getId(),6)).description("Voltage U1" + meter.getTitleEn()).register(meterRegistry);
-                    Gauge.builder("meter_"+meter.getPosition()+"_U2", ()->f.apply( meter.getId(),7)).description("Voltage U2" + meter.getTitleEn()).register(meterRegistry);
-                    Gauge.builder("meter_"+meter.getPosition()+"_U3", ()->f.apply( meter.getId(),8)).description("Voltage U3" + meter.getTitleEn()).register(meterRegistry);
-                    Gauge.builder("meter_"+meter.getPosition()+"_U12", ()->f.apply( meter.getId(),9)).description("Voltage U12" + meter.getTitleEn()).register(meterRegistry);
-                    Gauge.builder("meter_"+meter.getPosition()+"_U23", ()->f.apply( meter.getId(),10)).description("Voltage U23" + meter.getTitleEn()).register(meterRegistry);
-                    Gauge.builder("meter_"+meter.getPosition()+"_U31", ()->f.apply( meter.getId(),11)).description("Voltage U31" + meter.getTitleEn()).register(meterRegistry);
+                    Gauge.builder("meter_"+meter.getPosition()+"_I1", ()->f.apply( meter.getId(),3)).description("Current I1 " + meter.getTitleEn()).register(meterRegistry);
+                    Gauge.builder("meter_"+meter.getPosition()+"_I2", ()->f.apply( meter.getId(),4)).description("Current I2 " + meter.getTitleEn()).register(meterRegistry);
+                    Gauge.builder("meter_"+meter.getPosition()+"_I3", ()->f.apply( meter.getId(),5)).description("Current I3 " + meter.getTitleEn()).register(meterRegistry);
+                    Gauge.builder("meter_"+meter.getPosition()+"_U1", ()->f.apply( meter.getId(),6)).description("Voltage U1 " + meter.getTitleEn()).register(meterRegistry);
+                    Gauge.builder("meter_"+meter.getPosition()+"_U2", ()->f.apply( meter.getId(),7)).description("Voltage U2 " + meter.getTitleEn()).register(meterRegistry);
+                    Gauge.builder("meter_"+meter.getPosition()+"_U3", ()->f.apply( meter.getId(),8)).description("Voltage U3 " + meter.getTitleEn()).register(meterRegistry);
+                    Gauge.builder("meter_"+meter.getPosition()+"_U12", ()->f.apply( meter.getId(),9)).description("Voltage U12 " + meter.getTitleEn()).register(meterRegistry);
+                    Gauge.builder("meter_"+meter.getPosition()+"_U23", ()->f.apply( meter.getId(),10)).description("Voltage U23 " + meter.getTitleEn()).register(meterRegistry);
+                    Gauge.builder("meter_"+meter.getPosition()+"_U31", ()->f.apply( meter.getId(),11)).description("Voltage U31 " + meter.getTitleEn()).register(meterRegistry);
                 }
             }
         }
