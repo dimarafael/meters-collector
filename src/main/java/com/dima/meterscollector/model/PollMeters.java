@@ -27,7 +27,7 @@ import java.util.List;
 @Component
 public class PollMeters {
 
-    public float getValues(Long id, int req){ //req: 0-p, 1-q, 2-s
+    public float getValues(Long id, int req){ //req: 0-p, 1-q, 2-s, 3-I1, 4-I2, 5-I3, 6-U1, 7-U2, 8-U3, 9-U12, 10-U23, 11-U31
         float res = 0;
         for(MeterData data : meterDataList){
             if(data.getId() == id){
@@ -35,6 +35,15 @@ public class PollMeters {
                     case 0 -> data.getP();
                     case 1 -> data.getQ();
                     case 2 -> data.getS();
+                    case 3 -> data.getI1();
+                    case 4 -> data.getI2();
+                    case 5 -> data.getI3();
+                    case 6 -> data.getU1();
+                    case 7 -> data.getU2();
+                    case 8 -> data.getU3();
+                    case 9 -> data.getU12();
+                    case 10 -> data.getU23();
+                    case 11 -> data.getU31();
                     default -> 0;
                 };
             }
