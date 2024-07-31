@@ -46,7 +46,7 @@ public class PrometheusController {
                     Gauge.builder("meter_"+meter.getPosition()+"_U3", ()->f.apply( meter.getId(),8)).description("Voltage U3" + meter.getTitleEn()).register(meterRegistry);
                     Gauge.builder("meter_"+meter.getPosition()+"_U12", ()->f.apply( meter.getId(),9)).description("Voltage U12" + meter.getTitleEn()).register(meterRegistry);
                     Gauge.builder("meter_"+meter.getPosition()+"_U23", ()->f.apply( meter.getId(),10)).description("Voltage U23" + meter.getTitleEn()).register(meterRegistry);
-                    Gauge.builder("meter_"+meter.getPosition()+"_U31", ()->f.apply( meter.getId(),11)).description("Voltage U31" + meter.getTitleEn()).register(meterRegistry);mcz
+                    Gauge.builder("meter_"+meter.getPosition()+"_U31", ()->f.apply( meter.getId(),11)).description("Voltage U31" + meter.getTitleEn()).register(meterRegistry);
                 }
             }
         }
