@@ -377,11 +377,15 @@ public class PollMeters {
 
                 } catch (Exception e){
                     logger.error("Modbus: " + meter.getIpAddress() + " meter ID=" + meter.getId() + " not reachable. Exception: " + e);
-
-                    MeterData previousData = meterDataList.stream()
-                            .filter(data -> meter.getId().equals(data.getId()))
-                            .findAny().orElse(null);
-                    if(previousData != null) meterData = previousData;
+                    
+                    if(meterDataList != null){
+                        MeterData previousData = meterDataList.stream()
+                        .filter(data -> meter.getId().equals(data.getId()))
+                        .findAny().orElse(null);
+                        if(previousData != null) meterData = previousData;
+                    }
+                    
+                    // if(previousData != null) meterData = previousData;
                     meterData.setP(0);
                     meterData.setQ(0);
                     meterData.setS(0);
