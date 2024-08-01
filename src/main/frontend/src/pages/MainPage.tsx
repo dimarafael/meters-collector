@@ -25,8 +25,14 @@ function SubscribingComponent() {
 
 
     const getRealStr = function (data: number): string {
-        if (data !== undefined) {
+        if (data !== undefined && typeof data === 'number') {
             return (data.toFixed(2).toString())
+        } else return('0')
+    }
+
+    const getIntStr = function (data: number): string {
+        if (data !== undefined && typeof data === 'number') {
+            return (data.toFixed(0).toString())
         } else return('0')
     }
 
@@ -65,14 +71,39 @@ function SubscribingComponent() {
                                     <div className='w-1/5 text-left pl-1 sm:hidden'>Q</div>
                                     <div className='w-4/5 sm:w-1/2 text-left'>{getRealStr(item.q)} kvar</div>
                                 </div>
-                                <div className='flex mx-1'>
+                                <div className='flex border-b mx-1'>
                                     <div className='w-1/2 text-left pl-4 hidden sm:flex'>Apparent</div>
                                     <div className='w-1/5 text-left pl-1 sm:hidden'>S</div>
                                     <div className='w-4/5 sm:w-1/2 text-left'>{getRealStr(item.s)} kVA</div>
                                 </div>
-                                <div className='hidden sm:flex text-sm text-left pl-1 pt-9 text-neutral-300'>
-                                    {item.id}:Polling time: {item.pollTime/1000000}s
+
+                                <div className='border-b mx-1 hidden sm:flex'>
+                                    <div className="w-1/12 text-right">I1</div>
+                                    <div className="w-3/12 text-left">: {getIntStr(item.i1)}A</div>
+                                    <div className="w-1/12 text-right">I2</div>
+                                    <div className="w-3/12 text-left">: {getIntStr(item.i2)}A</div>
+                                    <div className="w-1/12 text-right">I3</div>
+                                    <div className="w-3/12 text-left">: {getIntStr(item.i3)}A</div>
                                 </div>
+
+                                <div className='border-b mx-1 hidden sm:flex'>
+                                    <div className="w-1/12 text-right">U1</div>
+                                    <div className="w-3/12 text-left">: {getIntStr(item.u1)}V</div>
+                                    <div className="w-1/12 text-right">U2</div>
+                                    <div className="w-3/12 text-left">: {getIntStr(item.u2)}V</div>
+                                    <div className="w-1/12 text-right">U3</div>
+                                    <div className="w-3/12 text-left">: {getIntStr(item.u3)}V</div>
+                                </div>
+
+                                <div className='mx-1 hidden sm:flex'>
+                                    <div className="w-1/12 text-right">U12</div>
+                                    <div className="w-3/12 text-left ml-2">: {getIntStr(item.u12)}V</div>
+                                    <div className="w-1/12 text-right">U23</div>
+                                    <div className="w-3/12 text-left ml-2">: {getIntStr(item.u23)}V</div>
+                                    <div className="w-1/12 text-right">U31</div>
+                                    <div className="w-3/12 text-left ml-2">: {getIntStr(item.u31)}V</div>
+                                </div>
+
                             </div>
                             <div className='flex w-2/3 sm:w-1/2 flex-col'>
                                 <div className='font-semibold border-b mx-1'>Energy</div>
@@ -99,6 +130,10 @@ function SubscribingComponent() {
                                 <div className='flex mx-1'>
                                     <div className='w-1/3 sm:w-1/2 text-left pl-1 sm:pl-3'>Apparent</div>
                                     <div className='w-2/3 sm:w-1/2 text-left  pl-1 sm:pl-0'>{getRealStr(item.es)} kVAh</div>
+                                </div>
+
+                                <div className='hidden sm:flex text-sm text-left pl-4 pt-1 text-neutral-300'>
+                                    {item.id}:Polling time: {item.pollTime/1000000}s
                                 </div>
                             </div>
                         </div>

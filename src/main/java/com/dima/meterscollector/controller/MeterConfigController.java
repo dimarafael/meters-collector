@@ -69,6 +69,18 @@ public class MeterConfigController {
         updateMeterConf.setAddrEs(meterConf.getAddrEs());
         updateMeterConf.setAddrEsEnable(meterConf.isAddrEsEnable());
         updateMeterConf.setDataInKilo(meterConf.isDataInKilo());
+
+        updateMeterConf.setAddrI1(meterConf.getAddrI1());
+        updateMeterConf.setAddrI2(meterConf.getAddrI2());
+        updateMeterConf.setAddrI3(meterConf.getAddrI3());
+        updateMeterConf.setAddrU1(meterConf.getAddrU1());
+        updateMeterConf.setAddrU2(meterConf.getAddrU2());
+        updateMeterConf.setAddrU3(meterConf.getAddrU3());
+        updateMeterConf.setAddrU12(meterConf.getAddrU12());
+        updateMeterConf.setAddrU23(meterConf.getAddrU23());
+        updateMeterConf.setAddrU31(meterConf.getAddrU31());
+        updateMeterConf.setAddrUIEnable(meterConf.isAddrUIEnable());
+
         meterConfigRepo.save(updateMeterConf);
         pollMeters.setMeterConfigActual(false);
         return meterConf;
@@ -76,6 +88,9 @@ public class MeterConfigController {
 
     @DeleteMapping("/{id}")
     public void deleteMeter(@PathVariable long id){
+        if(!meterConfigRepo.existsById(id)){
+            throw new NotFoundException();
+        }
         meterConfigRepo.deleteById(id);
         pollMeters.setMeterConfigActual(false);
     }

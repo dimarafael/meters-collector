@@ -46,6 +46,27 @@ export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNew
     const [addrEsErr, setAddrEsErr] = useState(false)
     const [dataInKilo, setDataInKilo] = useState(meter?.dataInKilo|| false)
 
+    const [addrI1, setAddrI1] = useState(meter?.addrI1)
+    const [addrI2, setAddrI2] = useState(meter?.addrI2)
+    const [addrI3, setAddrI3] = useState(meter?.addrI3)
+    const [addrU1, setAddrU1] = useState(meter?.addrU1)
+    const [addrU2, setAddrU2] = useState(meter?.addrU2)
+    const [addrU3, setAddrU3] = useState(meter?.addrU3)
+    const [addrU12, setAddrU12] = useState(meter?.addrU12)
+    const [addrU23, setAddrU23] = useState(meter?.addrU23)
+    const [addrU31, setAddrU31] = useState(meter?.addrU31)
+    const [addrUIEnable, setAddrUIEnable] = useState(meter?.addrUIEnable || false)
+
+    const [addrI1Err, setAddrI1Err] = useState(false)
+    const [addrI2Err, setAddrI2Err] = useState(false)
+    const [addrI3Err, setAddrI3Err] = useState(false)
+    const [addrU1Err, setAddrU1Err] = useState(false)
+    const [addrU2Err, setAddrU2Err] = useState(false)
+    const [addrU3Err, setAddrU3Err] = useState(false)
+    const [addrU12Err, setAddrU12Err] = useState(false)
+    const [addrU23Err, setAddrU23Err] = useState(false)
+    const [addrU31Err, setAddrU31Err] = useState(false)
+
     let newMeter:meterConfiguration
     // const [newMeter, setNewMeter] = useState<meterConfiguration>()
 
@@ -67,6 +88,15 @@ export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNew
         setAddrErErr(addrEr == undefined)
         setAddrEgErr(addrEg == undefined)
         setAddrEsErr(addrEs == undefined)
+        setAddrI1Err(addrI1 == undefined)
+        setAddrI2Err(addrI2 == undefined)
+        setAddrI3Err(addrI3 == undefined)
+        setAddrU1Err(addrU1 == undefined)
+        setAddrU2Err(addrU2 == undefined)
+        setAddrU3Err(addrU3 == undefined)
+        setAddrU12Err(addrU12 == undefined)
+        setAddrU23Err(addrU23 == undefined)
+        setAddrU31Err(addrU31 == undefined)
    }
 
     function formValidateAndSubmit(){
@@ -84,7 +114,16 @@ export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNew
             !addrEadErr &&
             !addrErErr &&
             !addrEgErr &&
-            !addrEsErr)
+            !addrEsErr &&
+            !addrI1Err &&
+            !addrI2Err &&
+            !addrI3Err &&
+            !addrU1Err &&
+            !addrU2Err &&
+            !addrU3Err &&
+            !addrU12Err &&
+            !addrU23Err &&
+            !addrU31Err)
         if (isValid){
             newMeter = {
                     addrEa: addrEa || 0,
@@ -110,7 +149,18 @@ export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNew
                     titleEn: titleEn,
                     titleHu: titleHu,
                     unitId: unitId || 0,
-                    dataInKilo: dataInKilo
+                    dataInKilo: dataInKilo,
+
+                    addrI1: addrI1 || 0,
+                    addrI2: addrI2 || 0,
+                    addrI3: addrI3 || 0,
+                    addrU1: addrU1 || 0,
+                    addrU2: addrU2 || 0,
+                    addrU3: addrU3 || 0,
+                    addrU12: addrU12 || 0,
+                    addrU23: addrU23 || 0,
+                    addrU31: addrU31 || 0,
+                    addrUIEnable: addrUIEnable
                 }
         }
         return isValid
@@ -297,6 +347,157 @@ export function PopUpAddNewMeter({onCancel, onOk, meter, isNewMeter}:PupUpAddNew
                                     />
                                 </div>
                             </div>
+
+                            <div className='flex py-1'>
+                                <div className='w-3/6 text-right'>Voltage and Current:</div>
+                                <div className='w-1/6 text-center'>
+                                    <input type='checkbox' checked={addrUIEnable}
+                                           onChange={(val)=>{setAddrUIEnable(val.target.checked)}}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className='flex py-1'>
+                                <div className='w-1/12 text-right'>I1:</div>
+                                <div className='w-3/12 text-left'>
+                                    <input type='number' className={`w-full rounded px-1 outline-none
+                                    border border-solid transition ease-in-out
+                                    focus:border-[#046a38]
+                                    ${addrI1Err ? 'border-red-700':'border-gray-300'}`}
+                                           value={addrI1}
+                                           onChange={(val)=>{
+                                               setAddrI1(getInt(val.target.value))
+                                           }}
+                                           onBlur={(val)=>{
+                                               setAddrI1Err(val.target.value == '' || addrI1 == undefined)}}
+                                    />
+                                </div>
+
+                                <div className='w-1/12 text-right'>I2:</div>
+                                <div className='w-3/12 text-left'>
+                                    <input type='number' className={`w-full rounded px-1 outline-none
+                                    border border-solid transition ease-in-out
+                                    focus:border-[#046a38]
+                                    ${addrI2Err ? 'border-red-700':'border-gray-300'}`}
+                                           value={addrI2}
+                                           onChange={(val)=>{
+                                               setAddrI2(getInt(val.target.value))
+                                           }}
+                                           onBlur={(val)=>{
+                                               setAddrI2Err(val.target.value == '' || addrI2 == undefined)}}
+                                    />
+                                </div>
+
+                                <div className='w-1/12 text-right'>I3:</div>
+                                <div className='w-3/12 text-left'>
+                                    <input type='number' className={`w-full rounded px-1 outline-none
+                                    border border-solid transition ease-in-out
+                                    focus:border-[#046a38]
+                                    ${addrI3Err ? 'border-red-700':'border-gray-300'}`}
+                                           value={addrI3}
+                                           onChange={(val)=>{
+                                               setAddrI3(getInt(val.target.value))
+                                           }}
+                                           onBlur={(val)=>{
+                                               setAddrI3Err(val.target.value == '' || addrI3 == undefined)}}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className='flex py-1'>
+                                <div className='w-1/12 text-right'>U1:</div>
+                                <div className='w-3/12 text-left'>
+                                    <input type='number' className={`w-full rounded px-1 outline-none
+                                    border border-solid transition ease-in-out
+                                    focus:border-[#046a38]
+                                    ${addrU1Err ? 'border-red-700':'border-gray-300'}`}
+                                           value={addrU1}
+                                           onChange={(val)=>{
+                                               setAddrU1(getInt(val.target.value))
+                                           }}
+                                           onBlur={(val)=>{
+                                               setAddrU1Err(val.target.value == '' || addrU1 == undefined)}}
+                                    />
+                                </div>
+
+                                <div className='w-1/12 text-right'>U2:</div>
+                                <div className='w-3/12 text-left'>
+                                    <input type='number' className={`w-full rounded px-1 outline-none
+                                    border border-solid transition ease-in-out
+                                    focus:border-[#046a38]
+                                    ${addrU2Err ? 'border-red-700':'border-gray-300'}`}
+                                           value={addrU2}
+                                           onChange={(val)=>{
+                                               setAddrU2(getInt(val.target.value))
+                                           }}
+                                           onBlur={(val)=>{
+                                               setAddrU2Err(val.target.value == '' || addrU2 == undefined)}}
+                                    />
+                                </div>
+
+                                <div className='w-1/12 text-right'>U3:</div>
+                                <div className='w-3/12 text-left'>
+                                    <input type='number' className={`w-full rounded px-1 outline-none
+                                    border border-solid transition ease-in-out
+                                    focus:border-[#046a38]
+                                    ${addrU3Err ? 'border-red-700':'border-gray-300'}`}
+                                           value={addrU3}
+                                           onChange={(val)=>{
+                                               setAddrU3(getInt(val.target.value))
+                                           }}
+                                           onBlur={(val)=>{
+                                               setAddrU3Err(val.target.value == '' || addrU3 == undefined)}}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className='flex py-1'>
+                                <div className='w-1/12 text-right'>U12:</div>
+                                <div className='w-3/12 text-left'>
+                                    <input type='number' className={`w-full rounded px-1 outline-none
+                                    border border-solid transition ease-in-out
+                                    focus:border-[#046a38]
+                                    ${addrU12Err ? 'border-red-700':'border-gray-300'}`}
+                                           value={addrU12}
+                                           onChange={(val)=>{
+                                               setAddrU12(getInt(val.target.value))
+                                           }}
+                                           onBlur={(val)=>{
+                                               setAddrU12Err(val.target.value == '' || addrU12 == undefined)}}
+                                    />
+                                </div>
+
+                                <div className='w-1/12 text-right'>U23:</div>
+                                <div className='w-3/12 text-left'>
+                                    <input type='number' className={`w-full rounded px-1 outline-none
+                                    border border-solid transition ease-in-out
+                                    focus:border-[#046a38]
+                                    ${addrU23Err ? 'border-red-700':'border-gray-300'}`}
+                                           value={addrU23}
+                                           onChange={(val)=>{
+                                               setAddrU23(getInt(val.target.value))
+                                           }}
+                                           onBlur={(val)=>{
+                                               setAddrU23Err(val.target.value == '' || addrU23 == undefined)}}
+                                    />
+                                </div>
+
+                                <div className='w-1/12 text-right'>U31:</div>
+                                <div className='w-3/12 text-left'>
+                                    <input type='number' className={`w-full rounded px-1 outline-none
+                                    border border-solid transition ease-in-out
+                                    focus:border-[#046a38]
+                                    ${addrU31Err ? 'border-red-700':'border-gray-300'}`}
+                                           value={addrU31}
+                                           onChange={(val)=>{
+                                               setAddrU31(getInt(val.target.value))
+                                           }}
+                                           onBlur={(val)=>{
+                                               setAddrU31Err(val.target.value == '' || addrU31 == undefined)}}
+                                    />
+                                </div>
+                            </div>
+
                         </div>
                         <div className='flex w-1/2 flex-col'>
 

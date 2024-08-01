@@ -142,6 +142,39 @@ export function MetersConfig() {
                                         <div className='w-1/6 text-center'><input type='checkbox' checked={item.addrSEnable} readOnly={true}/></div>
                                         <div className='w-3/12 text-left'>{item.addrS}</div>
                                     </div>
+
+                                    <div className='flex'>
+                                        <div className='w-9/12 text-right'>Voltage and Current:</div>
+                                        <div className='w-1/6 text-center'><input type='checkbox' checked={item.addrUIEnable} readOnly={true}/></div>
+                                    </div>
+
+                                    <div className='flex'>
+                                        <div className='w-2/12 text-right'>I1:</div>
+                                        <div className='w-2/12 text-left'>{item.addrI1}</div>
+                                        <div className='w-2/12 text-right'>I2:</div>
+                                        <div className='w-2/12 text-left'>{item.addrI2}</div>
+                                        <div className='w-2/12 text-right'>I3:</div>
+                                        <div className='w-2/12 text-left'>{item.addrI3}</div>
+                                    </div>
+
+                                    <div className='flex'>
+                                        <div className='w-2/12 text-right'>U1:</div>
+                                        <div className='w-2/12 text-left'>{item.addrU1}</div>
+                                        <div className='w-2/12 text-right'>U2:</div>
+                                        <div className='w-2/12 text-left'>{item.addrU2}</div>
+                                        <div className='w-2/12 text-right'>U3:</div>
+                                        <div className='w-2/12 text-left'>{item.addrU3}</div>
+                                    </div>
+
+                                    <div className='flex'>
+                                        <div className='w-2/12 text-right'>U12:</div>
+                                        <div className='w-2/12 text-left'>{item.addrU12}</div>
+                                        <div className='w-2/12 text-right'>U23:</div>
+                                        <div className='w-2/12 text-left'>{item.addrU23}</div>
+                                        <div className='w-2/12 text-right'>U31:</div>
+                                        <div className='w-2/12 text-left'>{item.addrU31}</div>
+                                    </div>
+
                                 </div>
                                 <div className='flex w-1/2 flex-col'>
                                     <div className='flex'>

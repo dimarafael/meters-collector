@@ -27,7 +27,7 @@ import java.util.List;
 @Component
 public class PollMeters {
 
-    public float getValues(Long id, int req){ //req: 0-p, 1-q, 2-s
+    public float getValues(Long id, int req){ //req: 0-p, 1-q, 2-s, 3-I1, 4-I2, 5-I3, 6-U1, 7-U2, 8-U3, 9-U12, 10-U23, 11-U31
         float res = 0;
         for(MeterData data : meterDataList){
             if(data.getId() == id){
@@ -35,6 +35,15 @@ public class PollMeters {
                     case 0 -> data.getP();
                     case 1 -> data.getQ();
                     case 2 -> data.getS();
+                    case 3 -> data.getI1();
+                    case 4 -> data.getI2();
+                    case 5 -> data.getI3();
+                    case 6 -> data.getU1();
+                    case 7 -> data.getU2();
+                    case 8 -> data.getU3();
+                    case 9 -> data.getU12();
+                    case 10 -> data.getU23();
+                    case 11 -> data.getU31();
                     default -> 0;
                 };
             }
@@ -117,6 +126,9 @@ public class PollMeters {
         }
         logger.debug("Modbus: Start polling");
         for(MeterConfiguration meter : meterConfigurations){
+            int k = 1; // koefficient for Voltage and Current, in schneider meters should be 1000
+            if(meter.isDataInKilo()) k = 1000;
+
             if(meter.isPollingEnable()){
                 LocalTime startTime = LocalTime.now();//For polling time calculation
                 MeterData meterData = new MeterData(); //Object for collecting data from one meter
@@ -255,17 +267,143 @@ public class PollMeters {
                         }
                     }
 
+                    if(meter.isAddrUIEnable()){
+                        //I1
+                        try {
+                            meterData.setI1(pollFloat(meter.getUnitId(),meter.getAddrI1(),con, meter.isDataInKilo())*1000/k);
+
+                        } catch (Exception e){
+                            logger.error("Modbus not response: " + meter.getIpAddress()
+                                    + " unitId=" + meter.getUnitId()
+                                    + " register=" + meter.getAddrI1()
+                                    + ". Exception: " + e);
+                            meterData.setOnline(false);
+                            meterData.setI1(0);
+                        }
+
+                        //I2
+                        try {
+                            meterData.setI2(pollFloat(meter.getUnitId(),meter.getAddrI2(),con, meter.isDataInKilo())*1000/k);
+                        } catch (Exception e){
+                            logger.error("Modbus not response: " + meter.getIpAddress()
+                                    + " unitId=" + meter.getUnitId()
+                                    + " register=" + meter.getAddrI2()
+                                    + ". Exception: " + e);
+                            meterData.setOnline(false);
+                            meterData.setI2(0);
+                        }
+
+                        //I3
+                        try {
+                            meterData.setI3(pollFloat(meter.getUnitId(),meter.getAddrI3(),con, meter.isDataInKilo())*1000/k);
+                        } catch (Exception e){
+                            logger.error("Modbus not response: " + meter.getIpAddress()
+                                    + " unitId=" + meter.getUnitId()
+                                    + " register=" + meter.getAddrI3()
+                                    + ". Exception: " + e);
+                            meterData.setOnline(false);
+                            meterData.setI3(0);
+                        }
+
+                        //U1
+                        try {
+                            meterData.setU1(pollFloat(meter.getUnitId(),meter.getAddrU1(),con, meter.isDataInKilo())*1000/k);
+                        } catch (Exception e){
+                            logger.error("Modbus not response: " + meter.getIpAddress()
+                                    + " unitId=" + meter.getUnitId()
+                                    + " register=" + meter.getAddrU1()
+                                    + ". Exception: " + e);
+                            meterData.setOnline(false);
+                            meterData.setU1(0);
+                        }
+
+                        //U2
+                        try {
+                            meterData.setU2(pollFloat(meter.getUnitId(),meter.getAddrU2(),con, meter.isDataInKilo())*1000/k);
+                        } catch (Exception e){
+                            logger.error("Modbus not response: " + meter.getIpAddress()
+                                    + " unitId=" + meter.getUnitId()
+                                    + " register=" + meter.getAddrU2()
+                                    + ". Exception: " + e);
+                            meterData.setOnline(false);
+                            meterData.setU2(0);
+                        }
+
+                        //U3
+                        try {
+                            meterData.setU3(pollFloat(meter.getUnitId(),meter.getAddrU3(),con, meter.isDataInKilo())*1000/k);
+                        } catch (Exception e){
+                            logger.error("Modbus not response: " + meter.getIpAddress()
+                                    + " unitId=" + meter.getUnitId()
+                                    + " register=" + meter.getAddrU3()
+                                    + ". Exception: " + e);
+                            meterData.setOnline(false);
+                            meterData.setU3(0);
+                        }
+
+                        //U12
+                        try {
+                            meterData.setU12(pollFloat(meter.getUnitId(),meter.getAddrU12(),con, meter.isDataInKilo())*1000/k);
+                        } catch (Exception e){
+                            logger.error("Modbus not response: " + meter.getIpAddress()
+                                    + " unitId=" + meter.getUnitId()
+                                    + " register=" + meter.getAddrU12()
+                                    + ". Exception: " + e);
+                            meterData.setOnline(false);
+                            meterData.setU12(0);
+                        }
+
+                        //U23
+                        try {
+                            meterData.setU23(pollFloat(meter.getUnitId(),meter.getAddrU23(),con, meter.isDataInKilo())*1000/k);
+                        } catch (Exception e){
+                            logger.error("Modbus not response: " + meter.getIpAddress()
+                                    + " unitId=" + meter.getUnitId()
+                                    + " register=" + meter.getAddrU23()
+                                    + ". Exception: " + e);
+                            meterData.setOnline(false);
+                            meterData.setU23(0);
+                        }
+
+                        //U31
+                        try {
+                            meterData.setU31(pollFloat(meter.getUnitId(),meter.getAddrU31(),con, meter.isDataInKilo())*1000/k);
+                        } catch (Exception e){
+                            logger.error("Modbus not response: " + meter.getIpAddress()
+                                    + " unitId=" + meter.getUnitId()
+                                    + " register=" + meter.getAddrU31()
+                                    + ". Exception: " + e);
+                            meterData.setOnline(false);
+                            meterData.setU31(0);
+                        }
+
+                    }
+
                 } catch (Exception e){
                     logger.error("Modbus: " + meter.getIpAddress() + " meter ID=" + meter.getId() + " not reachable. Exception: " + e);
-
-                    MeterData previousData = meterDataList.stream()
-                            .filter(data -> meter.getId().equals(data.getId()))
-                            .findAny().orElse(null);
-                    if(previousData != null) meterData = previousData;
+                    
+                    if(meterDataList != null){
+                        MeterData previousData = meterDataList.stream()
+                        .filter(data -> meter.getId().equals(data.getId()))
+                        .findAny().orElse(null);
+                        if(previousData != null) meterData = previousData;
+                    }
+                    
+                    // if(previousData != null) meterData = previousData;
                     meterData.setP(0);
                     meterData.setQ(0);
                     meterData.setS(0);
                     meterData.setOnline(false);
+
+                    meterData.setI1(0);
+                    meterData.setI2(0);
+                    meterData.setI3(0);
+                    meterData.setU1(0);
+                    meterData.setU2(0);
+                    meterData.setU3(0);
+                    meterData.setU12(0);
+                    meterData.setU23(0);
+                    meterData.setU31(0);
                 }
                 meterData.setPollTime(startTime.until(LocalTime.now(), ChronoUnit.MICROS));
                 meterDataListCollecting.add(meterData); //Add data from this meter lo list
