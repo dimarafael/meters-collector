@@ -93,6 +93,13 @@
             <version>1.10.3</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/io.github.betacatcode/spring-boot-starter-influxdb -->
+        <dependency>
+            <groupId>io.github.betacatcode</groupId>
+            <artifactId>spring-boot-starter-influxdb</artifactId>
+            <version>0.0.6-RELEASE</version>
+        </dependency>
+
     </dependencies>
 
     <build>
