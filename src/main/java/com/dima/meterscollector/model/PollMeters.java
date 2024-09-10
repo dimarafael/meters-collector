@@ -1,5 +1,6 @@
 package com.dima.meterscollector.model;
 
+import com.dima.meterscollector.controller.InfluxController;
 import com.dima.meterscollector.controller.PrometheusController;
 import com.dima.meterscollector.domain.MeterConfiguration;
 import com.dima.meterscollector.repository.MeterConfigRepo;
@@ -115,6 +116,9 @@ public class PollMeters {
 
     @Autowired
     SimpMessagingTemplate template;
+
+    @Autowired
+    private InfluxController influxController;
 
     @Scheduled(fixedDelay = 5000)
     public void pollMeters(){
@@ -407,6 +411,9 @@ public class PollMeters {
                 }
                 meterData.setPollTime(startTime.until(LocalTime.now(), ChronoUnit.MICROS));
                 meterDataListCollecting.add(meterData); //Add data from this meter lo list
+
+                influxController.sendMeterToInflux(meterData, meter);
+
                 try {
                     con.close();
                 } catch (Exception e){
