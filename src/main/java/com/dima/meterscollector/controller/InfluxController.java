@@ -4,6 +4,7 @@ import java.time.Instant;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.dima.meterscollector.domain.MeterConfiguration;
@@ -19,9 +20,14 @@ public class InfluxController {
 
     Logger logger = LoggerFactory.getLogger(InfluxController.class);
 
-    String token = "vdkudgs2qiqul6lOUEhqEssaz49aegZDb8TU_wXhRsXo17_htFDDdSBh80gB8X8IgOwfGa9HPudaF6-2V9uKAg=="; //all buckets tocken
-    String bucket = "my_test";
-    String org = "kometa";
+    @Value("${influxdb.token}")
+    private String token;
+    
+    @Value("${influxdb.bucket}")
+    private String bucket;
+    
+    @Value("${influxdb.org}")
+    private String org;
 
     public void sendMeterToInflux(MeterData meterData, MeterConfiguration meterConfiguration){
         InfluxDBClient client = InfluxDBClientFactory.create("http://10.0.10.64:8086", token.toCharArray(), org, bucket);

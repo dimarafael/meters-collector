@@ -121,7 +121,8 @@ public class PollMeters {
     private InfluxController influxController;
 
     //For sending time period to influx calculation. Every 60 seconds
-    private LocalTime influxSendTime = LocalTime.now().minusSeconds(61);
+    private static final int INFLUX_SEND_PERIOD = 60;
+    private LocalTime influxSendTime = LocalTime.now().minusSeconds(INFLUX_SEND_PERIOD + 1);
 
     @Scheduled(fixedDelay = 5000)
     public void pollMeters(){
@@ -416,7 +417,7 @@ public class PollMeters {
                 meterDataListCollecting.add(meterData); //Add data from this meter lo list
 
                 //Send meter data to influx every 60 seconds
-                if( influxSendTime.until(LocalTime.now(), ChronoUnit.SECONDS) > 60 ){
+                if( influxSendTime.until(LocalTime.now(), ChronoUnit.SECONDS) > INFLUX_SEND_PERIOD ){
                     influxController.sendMeterToInflux(meterData, meter);
                 }
 
@@ -429,7 +430,7 @@ public class PollMeters {
         }
 
         //Reset timer for sending to influx
-        if( influxSendTime.until(LocalTime.now(), ChronoUnit.SECONDS) > 60 ){
+        if( influxSendTime.until(LocalTime.now(), ChronoUnit.SECONDS) > INFLUX_SEND_PERIOD ){
             influxSendTime = LocalTime.now();
         }
 
