@@ -120,7 +120,8 @@ public class PollMeters {
     @Autowired
     private InfluxController influxController;
 
-    private LocalTime influxSendTime = LocalTime.now().minusSeconds(60);
+    //For sending time period to influx calculation. Every 60 seconds
+    private LocalTime influxSendTime = LocalTime.now().minusSeconds(61);
 
     @Scheduled(fixedDelay = 5000)
     public void pollMeters(){
@@ -414,10 +415,9 @@ public class PollMeters {
                 meterData.setPollTime(startTime.until(LocalTime.now(), ChronoUnit.MICROS));
                 meterDataListCollecting.add(meterData); //Add data from this meter lo list
 
-                System.out.println("Influx time = " + influxSendTime.until(LocalTime.now(), ChronoUnit.SECONDS));
+                //Send meter data to influx every 60 seconds
                 if( influxSendTime.until(LocalTime.now(), ChronoUnit.SECONDS) > 60 ){
                     influxController.sendMeterToInflux(meterData, meter);
-                    influxSendTime = LocalTime.now();
                 }
 
                 try {
@@ -426,6 +426,11 @@ public class PollMeters {
                     logger.error("Modbus disconnect from " + meter.getIpAddress() + ". Exception: " + e);
                 }
             }
+        }
+
+        //Reset timer for sending to influx
+        if( influxSendTime.until(LocalTime.now(), ChronoUnit.SECONDS) > 60 ){
+            influxSendTime = LocalTime.now();
         }
 
         meterDataList = new ArrayList<>(meterDataListCollecting); //Put collected data to list for client
