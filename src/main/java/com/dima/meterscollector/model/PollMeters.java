@@ -120,6 +120,8 @@ public class PollMeters {
     @Autowired
     private InfluxController influxController;
 
+    private LocalTime influxSendTime = LocalTime.now().minusSeconds(60);
+
     @Scheduled(fixedDelay = 5000)
     public void pollMeters(){
         meterDataListCollecting.clear();
@@ -412,7 +414,11 @@ public class PollMeters {
                 meterData.setPollTime(startTime.until(LocalTime.now(), ChronoUnit.MICROS));
                 meterDataListCollecting.add(meterData); //Add data from this meter lo list
 
-                influxController.sendMeterToInflux(meterData, meter);
+                System.out.println("Influx time = " + influxSendTime.until(LocalTime.now(), ChronoUnit.SECONDS));
+                if( influxSendTime.until(LocalTime.now(), ChronoUnit.SECONDS) > 60 ){
+                    influxController.sendMeterToInflux(meterData, meter);
+                    influxSendTime = LocalTime.now();
+                }
 
                 try {
                     con.close();
