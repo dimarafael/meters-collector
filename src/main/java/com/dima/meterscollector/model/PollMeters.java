@@ -121,7 +121,7 @@ public class PollMeters {
     private InfluxController influxController;
 
     //For sending time period to influx calculation. Every 60 seconds
-    private static final int INFLUX_SEND_PERIOD = 60;
+    private static final int INFLUX_SEND_PERIOD = 0; // 0 - send every loop // = 60;
     private LocalTime influxSendTime = LocalTime.now().minusSeconds(INFLUX_SEND_PERIOD + 1);
 
     @Scheduled(fixedDelay = 5000)
