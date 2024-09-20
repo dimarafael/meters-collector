@@ -29,8 +29,11 @@ public class InfluxController {
     @Value("${influxdb.org}")
     private String org;
 
+    @Value("${influxdb.url}")
+    private String influxdbUrl;
+
     public void sendMeterToInflux(MeterData meterData, MeterConfiguration meterConfiguration){
-        InfluxDBClient client = InfluxDBClientFactory.create("http://10.0.10.64:8086", token.toCharArray(), org, bucket);
+        InfluxDBClient client = InfluxDBClientFactory.create(influxdbUrl, token.toCharArray(), org, bucket);
         try{
             
             Point point = Point.measurement(meterConfiguration.getPosition())
