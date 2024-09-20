@@ -417,9 +417,9 @@ public class PollMeters {
                 meterDataListCollecting.add(meterData); //Add data from this meter lo list
 
                 //Send meter data to influx every 60 seconds
-                if( influxSendTime.until(LocalTime.now(), ChronoUnit.SECONDS) > INFLUX_SEND_PERIOD ){
+                // if( influxSendTime.until(LocalTime.now(), ChronoUnit.SECONDS) > INFLUX_SEND_PERIOD ){
                     influxController.sendMeterToInflux(meterData, meter);
-                }
+                // }
 
                 try {
                     con.close();
