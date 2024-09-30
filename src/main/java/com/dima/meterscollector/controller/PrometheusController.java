@@ -1,10 +1,10 @@
 package com.dima.meterscollector.controller;
 
-
 import com.dima.meterscollector.domain.MeterConfiguration;
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.config.MeterFilter;
+
 import org.springframework.stereotype.Component;
 
 import java.util.List;

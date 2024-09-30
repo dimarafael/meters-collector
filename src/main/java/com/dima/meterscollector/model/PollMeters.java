@@ -1,5 +1,6 @@
 package com.dima.meterscollector.model;
 
+import com.dima.meterscollector.controller.InfluxController;
 import com.dima.meterscollector.controller.PrometheusController;
 import com.dima.meterscollector.domain.MeterConfiguration;
 import com.dima.meterscollector.repository.MeterConfigRepo;
@@ -115,6 +116,13 @@ public class PollMeters {
 
     @Autowired
     SimpMessagingTemplate template;
+
+    @Autowired
+    private InfluxController influxController;
+
+    //For sending time period to influx calculation. Every 60 seconds
+    private static final int INFLUX_SEND_PERIOD = 0; // 0 - send every loop // = 60;
+    private LocalTime influxSendTime = LocalTime.now().minusSeconds(INFLUX_SEND_PERIOD + 1);
 
     @Scheduled(fixedDelay = 5000)
     public void pollMeters(){
@@ -407,12 +415,23 @@ public class PollMeters {
                 }
                 meterData.setPollTime(startTime.until(LocalTime.now(), ChronoUnit.MICROS));
                 meterDataListCollecting.add(meterData); //Add data from this meter lo list
+
+                //Send meter data to influx every 60 seconds
+                // if( influxSendTime.until(LocalTime.now(), ChronoUnit.SECONDS) > INFLUX_SEND_PERIOD ){
+                    influxController.sendMeterToInflux(meterData, meter);
+                // }
+
                 try {
                     con.close();
                 } catch (Exception e){
                     logger.error("Modbus disconnect from " + meter.getIpAddress() + ". Exception: " + e);
                 }
             }
+        }
+
+        //Reset timer for sending to influx
+        if( influxSendTime.until(LocalTime.now(), ChronoUnit.SECONDS) > INFLUX_SEND_PERIOD ){
+            influxSendTime = LocalTime.now();
         }
 
         meterDataList = new ArrayList<>(meterDataListCollecting); //Put collected data to list for client
