@@ -28,18 +28,20 @@ public class SaveMetersToDatabase {
     private void saveMeters(){
         List<MeterData> meterDataList = new ArrayList<>(pollMeters.getMeterDataList());
         for(MeterData meterData : meterDataList){
-            MetersDb metersDb = new MetersDb();
-            metersDb.setEa(meterData.getEa());
-            metersDb.setEad(meterData.getEad());
-            metersDb.setEr(meterData.getEr());
-            metersDb.setEg(meterData.getEg());
-            metersDb.setEs(meterData.getEs());
-            metersDb.setMeterConfiguration(
-                    pollMeters.getMeterConfigurations().stream()
-                            .filter(configuration -> meterData.getId() == configuration.getId())
-                            .findAny().orElse(null));
-            if(metersDb.getMeterConfiguration() != null){
-                metersDbRepo.save(metersDb);
+            if(meterData.isOnline()){
+                MetersDb metersDb = new MetersDb();
+                metersDb.setEa(meterData.getEa());
+                metersDb.setEad(meterData.getEad());
+                metersDb.setEr(meterData.getEr());
+                metersDb.setEg(meterData.getEg());
+                metersDb.setEs(meterData.getEs());
+                metersDb.setMeterConfiguration(
+                        pollMeters.getMeterConfigurations().stream()
+                                .filter(configuration -> meterData.getId() == configuration.getId())
+                                .findAny().orElse(null));
+                if(metersDb.getMeterConfiguration() != null){
+                    metersDbRepo.save(metersDb);
+                }
             }
         }
     }
