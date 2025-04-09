@@ -122,3 +122,14 @@ services:
       - /var/meters-collector/nodered:/data
     environment:
       - TZ=Europe/Budapest
+  
+  nocodb:
+    image: nocodb/nocodb:latest
+    container_name: nocodb
+    restart: always
+    depends_on:
+      - mysql
+    ports:
+      - "8080:8080"
+    volumes:
+      - /var/meters-collector/nocodb:/usr/app/data
